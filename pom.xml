@@ -12,6 +12,7 @@
     <modules>
         <module>AdminApi</module>
         <module>YahooModule</module>
+        <module>model</module>
     </modules>
 
     <dependencies>

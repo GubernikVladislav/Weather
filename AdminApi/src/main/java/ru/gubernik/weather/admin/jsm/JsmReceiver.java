@@ -10,9 +10,9 @@ import java.util.List;
 
 @MessageDriven(name = "Receiver", activationConfig = {
         @ActivationConfigProperty(propertyName = "destinationLookup",
-                propertyValue = "java:/jms/topic/city"),
+                propertyValue = "java:/jms/queue/city"),
         @ActivationConfigProperty(propertyName = "destinationType",
-                propertyValue = "javax.jms.Topic"),
+                propertyValue = "javax.jms.Queue"),
         @ActivationConfigProperty(propertyName = "acknowledgeMode",
                 propertyValue = "Auto-acknowledge")})
 public class JsmReceiver implements MessageListener {

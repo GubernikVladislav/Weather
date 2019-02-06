@@ -18,16 +18,17 @@ import javax.jms.ConnectionFactory;
 @SpringBootApplication
 @EnableJms
 public class YahooModule {
-
     @Bean
     public JmsListenerContainerFactory<?> myFactory(ConnectionFactory connectionFactory,
                                                     DefaultJmsListenerContainerFactoryConfigurer configurer) {
         DefaultJmsListenerContainerFactory factory = new DefaultJmsListenerContainerFactory();
+        // This provides all boot's default to this factory, including the message converter
         configurer.configure(factory, connectionFactory);
+        // You could still override some of Boot's default if necessary.
         return factory;
     }
 
-    @Bean
+    @Bean // Serialize message content to json using TextMessage
     public MessageConverter jacksonJmsMessageConverter() {
         MappingJackson2MessageConverter converter = new MappingJackson2MessageConverter();
         converter.setTargetType(MessageType.TEXT);
@@ -38,6 +39,7 @@ public class YahooModule {
     public static void main(String[] args) {
         ConfigurableApplicationContext context = SpringApplication.run(YahooModule.class, args);
 
-        JmsTemplate template = context.getBean(JmsTemplate.class);
+        JmsTemplate jmsTemplate = context.getBean(JmsTemplate.class);
+
     }
 }

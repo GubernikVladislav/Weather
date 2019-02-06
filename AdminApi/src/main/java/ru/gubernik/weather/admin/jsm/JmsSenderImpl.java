@@ -18,8 +18,8 @@ public class JmsSenderImpl implements JsmSender {
     /**
      * JSM очередь полученная от сервера по JNDI
      */
-    @Resource(mappedName = "java:/jms/topic/city")
-    private Topic queue;
+    @Resource(mappedName = "java:jboss/exported/jms/queue/city")
+    private Queue queue;
 
     @Inject
     private JMSContext context;
