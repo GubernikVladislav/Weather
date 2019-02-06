@@ -3,9 +3,10 @@ package ru.gubernik.weather.admin.jsm;
 import javax.annotation.Resource;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
+import javax.jms.Destination;
 import javax.jms.Queue;
 import javax.jms.JMSContext;
-
+import javax.jms.Topic;
 
 
 /**
@@ -17,8 +18,8 @@ public class JmsSenderImpl implements JsmSender {
     /**
      * JSM очередь полученная от сервера по JNDI
      */
-    @Resource(mappedName = "java:/jms/queue/messages")
-    private Queue queue;
+    @Resource(mappedName = "java:/jms/topic/city")
+    private Topic queue;
 
     @Inject
     private JMSContext context;
