@@ -1,33 +1,25 @@
-package ru.gubernik.weather.admin.jsm;
+package ru.gubernik.weather.yahoo;
 
 import javax.ejb.ActivationConfigProperty;
 import javax.ejb.MessageDriven;
 import javax.jms.JMSException;
 import javax.jms.Message;
 import javax.jms.MessageListener;
-import java.util.ArrayList;
-import java.util.List;
 
-@MessageDriven(name = "Receiver", activationConfig = {
+@MessageDriven(name = "JmsReceiver", activationConfig = {
         @ActivationConfigProperty(propertyName = "destinationLookup",
                 propertyValue = "java:/jms/queue/city"),
         @ActivationConfigProperty(propertyName = "destinationType",
                 propertyValue = "javax.jms.Queue"),
         @ActivationConfigProperty(propertyName = "acknowledgeMode",
                 propertyValue = "Auto-acknowledge")})
-public class JsmReceiver implements MessageListener {
-
-    private List<String> messages = new ArrayList<String>();
-
+public class JmsReceiver implements MessageListener {
+    @Override
     public void onMessage(Message message) {
         try {
-            messages.add(message.getBody(String.class));
+            System.out.println(message.getBody(String.class));
         } catch (JMSException e) {
             e.printStackTrace();
         }
-    }
-
-    public List<String> getMessageList(){
-        return messages;
     }
 }
