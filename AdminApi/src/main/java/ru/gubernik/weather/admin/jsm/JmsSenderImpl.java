@@ -12,7 +12,7 @@ import javax.jms.JMSContext;
  * Класс для отправки JMS сообщений в очередь на сервере
  */
 @ApplicationScoped
-public class JmsSender {
+public class JmsSenderImpl implements JsmSender {
 
     /**
      * JSM очередь полученная от сервера по JNDI
@@ -24,7 +24,7 @@ public class JmsSender {
     private JMSContext context;
 
     /**
-     * Отправка полученного сообщения в очередь
+     * Отправка полученного сообщения в JSM очередь
      * @param message
      */
     public void send(String message){

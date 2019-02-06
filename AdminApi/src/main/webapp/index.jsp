@@ -6,8 +6,11 @@
 </head>
 <body>
     <form action="/admin-api/set" method="post">
-        <input type="text" name="cityName">
+        <input type="text" name="cityName" placeholder="City name">
         <input type="submit" value="Submit">
     </form>
+    <div>
+        ${exception}
+    </div>
 </body>
 </html>
