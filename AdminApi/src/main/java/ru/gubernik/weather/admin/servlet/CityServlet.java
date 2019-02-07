@@ -1,6 +1,6 @@
 package ru.gubernik.weather.admin.servlet;
 
-import ru.gubernik.weather.admin.jsm.JmsSenderImpl;
+import ru.gubernik.weather.admin.jms.JmsSender;
 
 import javax.inject.Inject;
 import javax.servlet.ServletException;
@@ -15,7 +15,7 @@ import java.io.IOException;
 public class CityServlet extends HttpServlet {
 
     @Inject
-    private JmsSenderImpl jmsSender;
+    private JmsSender jmsSender;
 
     /**
      * получение запроса со страницы index.jsp и обработка запроса
@@ -23,15 +23,26 @@ public class CityServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        if(req.getParameter("cityName") != null) {
-            String cityName = req.getParameter("cityName");
-            if(!cityName.isEmpty()) {
-                jmsSender.send(cityName);
-            }else {
-                req.setAttribute("exception", "City name must be not null");
-            }
+        String cityName = req.getParameter("cityName");
+
+        if(cityName == null || cityName.isEmpty()){
+            req.setAttribute("exception", "City name must be not null");
+            setForward(req, resp);
+            return;
+        }else if(!cityName.matches("^[a-zA-Z]+[\\-]?[a-zA-Z]+$")){
+            req.setAttribute("exception", "City name must contains only letters ");
+            setForward(req, resp);
+            return;
         }
 
+        jmsSender.send(cityName);
+        setForward(req, resp);
+    }
+
+    /**
+     * Перезагрузка .jsp страницы
+     */
+    private void setForward(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.getRequestDispatcher("/index.jsp").forward(req, resp);
     }
 }

@@ -1,19 +1,17 @@
-package ru.gubernik.weather.admin.jsm;
+package ru.gubernik.weather.admin.jms;
 
 import javax.annotation.Resource;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
-import javax.jms.Destination;
 import javax.jms.Queue;
 import javax.jms.JMSContext;
-import javax.jms.Topic;
 
 
 /**
  * Класс для отправки JMS сообщений в очередь на сервере
  */
 @ApplicationScoped
-public class JmsSenderImpl implements JsmSender {
+public class JmsSenderImpl implements JmsSender {
 
     /**
      * JSM очередь полученная от сервера по JNDI

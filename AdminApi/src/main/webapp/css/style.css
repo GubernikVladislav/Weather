@@ -1,0 +1,12 @@
+.exc{
+    color: red;
+}
+.enter {
+    width: 200px;
+    height: 200px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin: -100px 0 0 -100px;
+    z-index: 9999;
+ }

@@ -1,9 +1,9 @@
-package ru.gubernik.weather.admin.jsm;
+package ru.gubernik.weather.admin.jms;
 
 /**
  * Интерфейс отправки сообщений
  */
-public interface JsmSender {
+public interface JmsSender {
 
     /**
      * Отправка сообщения
