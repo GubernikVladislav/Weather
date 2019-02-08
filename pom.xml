@@ -32,6 +32,16 @@
                 <artifactId>junit</artifactId>
                 <version>${junit-version}</version>
             </dependency>
+            <dependency>
+                <groupId>javax.enterprise</groupId>
+                <artifactId>cdi-api</artifactId>
+                <version>${javax-enteprise}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.jboss.spec.javax.jms</groupId>
+                <artifactId>jboss-jms-api_2.0_spec</artifactId>
+                <version>${jboss-jms}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
