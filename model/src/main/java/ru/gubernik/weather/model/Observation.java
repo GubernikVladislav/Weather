@@ -1,15 +1,33 @@
 package ru.gubernik.weather.model;
 
+/**
+ * Текущая погода
+ */
 public class Observation {
 
+    /**
+     * Ветер
+     */
     private Wind wind;
 
+    /**
+     * Атмосфера
+     */
     private Atmosphere atmosphere;
 
+    /**
+     * Астрономия
+     */
     private Astronomy astronomy;
 
+    /**
+     * Погодные условия
+     */
     private Condition condition;
 
+    /**
+     * Время наблюдения
+     */
     private Long pubDate;
 
     public Observation() {

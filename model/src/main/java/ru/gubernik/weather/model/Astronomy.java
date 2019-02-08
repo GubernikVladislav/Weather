@@ -1,9 +1,18 @@
 package ru.gubernik.weather.model;
 
+/**
+ * Астрономия
+ */
 public class Astronomy {
 
+    /**
+     * Рассвет
+     */
     private String sunrise;
 
+    /**
+     * Закат
+     */
     private String sunset;
 
     public Astronomy() {

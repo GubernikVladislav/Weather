@@ -1,11 +1,23 @@
 package ru.gubernik.weather.model;
 
+/**
+ * Атмосфера
+ */
 public class Atmosphere {
 
+    /**
+     * Влажность
+     */
     private Integer humidity;
 
+    /**
+     * Видимость
+     */
     private Integer visibility;
 
+    /**
+     * Давление
+     */
     private Double presure;
 
     public Atmosphere() {

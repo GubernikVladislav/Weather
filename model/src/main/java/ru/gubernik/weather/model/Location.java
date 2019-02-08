@@ -1,19 +1,48 @@
 package ru.gubernik.weather.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+/**
+ * Модель города
+ */
 public class Location {
 
+    /**
+     * Идентификатор
+     */
+    @JsonProperty("woeid")
     private Integer woeId;
 
+    /**
+     * Название города
+     */
     private String city;
 
+    /**
+     * Регион
+     */
     private String region;
 
+    /**
+     * Страна
+     */
     private String country;
 
+    /**
+     * Широта
+     */
     private Double lat;
 
+    /**
+     * Долгота
+     */
+    @JsonProperty("long")
     private Double $long;
 
+    /**
+     * Часовой пояс
+     */
+    @JsonProperty("timezone_id")
     private String timezoneId;
 
     public Location() {

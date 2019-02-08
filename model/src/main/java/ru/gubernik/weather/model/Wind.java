@@ -1,11 +1,23 @@
 package ru.gubernik.weather.model;
 
+/**
+ * Ветер
+ */
 public class Wind {
 
+    /**
+     *
+     */
     private Integer chill;
 
+    /**
+     * Направление
+     */
     private Integer direction;
 
+    /**
+     * Скорость
+     */
     private Double speed;
 
     public Wind() {

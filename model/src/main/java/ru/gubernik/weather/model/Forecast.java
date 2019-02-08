@@ -1,17 +1,38 @@
 package ru.gubernik.weather.model;
 
+/**
+ * Прогноз
+ */
 public class Forecast {
 
+    /**
+     * День недели
+     */
     private String day;
 
+    /**
+     * Дата
+     */
     private Long date;
 
+    /**
+     * Макс. температура
+     */
     private Integer low;
 
+    /**
+     * Мин. температура
+     */
     private Integer high;
 
+    /**
+     * Описание
+     */
     private String text;
 
+    /**
+     * Код
+     */
     private Integer code;
 
     public Forecast() {

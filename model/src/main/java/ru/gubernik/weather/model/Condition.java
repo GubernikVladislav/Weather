@@ -1,11 +1,23 @@
 package ru.gubernik.weather.model;
 
+/**
+ * Условия
+ */
 public class Condition {
 
+    /**
+     * Описание
+     */
     private String text;
 
+    /**
+     * Код
+     */
     private Integer code;
 
+    /**
+     * Температура
+     */
     private Integer temperature;
 
     public Condition() {
