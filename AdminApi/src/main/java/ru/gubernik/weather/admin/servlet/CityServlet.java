@@ -14,8 +14,12 @@ import java.io.IOException;
  */
 public class CityServlet extends HttpServlet {
 
+    private final JmsSender jmsSender;
+
     @Inject
-    private JmsSender jmsSender;
+    public CityServlet(JmsSender jmsSender) {
+        this.jmsSender = jmsSender;
+    }
 
     /**
      * получение запроса со страницы index.jsp и обработка запроса
@@ -29,7 +33,7 @@ public class CityServlet extends HttpServlet {
             req.setAttribute("exception", "City name must be not null");
             setForward(req, resp);
             return;
-        }else if(!cityName.matches("^[a-zA-Z]+[\\-]?[a-zA-Z]+$")){
+        }else if(!cityName.matches("^[a-zA-Z]+[\\-]?[a-zA-Z]+[\\-]?[a-zA-Z]+$")){
             req.setAttribute("exception", "City name must contains only letters ");
             setForward(req, resp);
             return;

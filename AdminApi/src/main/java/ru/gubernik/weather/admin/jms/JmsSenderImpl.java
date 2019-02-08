@@ -19,8 +19,12 @@ public class JmsSenderImpl implements JmsSender {
     @Resource(mappedName = "java:jboss/exported/jms/queue/city")
     private Queue queue;
 
+    private final JMSContext context;
+
     @Inject
-    private JMSContext context;
+    public JmsSenderImpl(JMSContext context) {
+        this.context = context;
+    }
 
     /**
      * Отправка полученного сообщения в JSM очередь
