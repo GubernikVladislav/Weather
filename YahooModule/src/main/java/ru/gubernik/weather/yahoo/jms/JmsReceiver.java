@@ -23,12 +23,8 @@ public class JmsReceiver implements MessageListener {
     @Resource
     private MessageDrivenContext mdc;
 
-    private final ModuleService moduleService;
-
     @Inject
-    public JmsReceiver(ModuleService moduleService) {
-        this.moduleService = moduleService;
-    }
+    private ModuleService moduleService;
 
     @Override
     public void onMessage(Message message) {
