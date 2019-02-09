@@ -22,4 +22,6 @@ public interface ModuleService {
      * Отправка Jms сообщения
      */
     void sendJms(Weather weather);
+
+    void print(String s);
 }
