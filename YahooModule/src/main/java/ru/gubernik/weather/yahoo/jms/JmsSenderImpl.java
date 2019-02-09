@@ -8,7 +8,7 @@ import javax.inject.Inject;
 import javax.jms.Destination;
 import javax.jms.JMSContext;
 import javax.jms.Message;
-import java.util.Queue;
+import javax.jms.Queue;
 
 /**
  * {@inheritDoc}
@@ -16,12 +16,10 @@ import java.util.Queue;
 @ApplicationScoped
 public class JmsSenderImpl implements JmsSender {
 
-    @Resource(mappedName = "java:jms/queue/weather")
+    @Resource(mappedName = "java:jboss/exported/jms/queue/weather")
     private Queue queue;
 
     private final JMSContext context;
-
-    private Message message;
 
     @Inject
     public JmsSenderImpl(JMSContext context) {
@@ -33,7 +31,7 @@ public class JmsSenderImpl implements JmsSender {
      */
     @Override
     public void send(Weather weather) {
-        message = context.createObjectMessage(weather);
+        Message message = context.createObjectMessage(weather);
         context.createProducer().send((Destination) queue, message);
     }
 }
