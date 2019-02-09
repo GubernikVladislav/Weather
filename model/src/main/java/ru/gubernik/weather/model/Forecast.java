@@ -1,9 +1,11 @@
 package ru.gubernik.weather.model;
 
+import java.io.Serializable;
+
 /**
  * Прогноз
  */
-public class Forecast {
+public class Forecast implements Serializable {
 
     /**
      * День недели
@@ -84,5 +86,17 @@ public class Forecast {
 
     public void setCode(Integer code) {
         this.code = code;
+    }
+
+    @Override
+    public String toString() {
+        return "Forecast{" +
+                "day='" + day + '\'' +
+                ", date=" + date +
+                ", low=" + low +
+                ", high=" + high +
+                ", text='" + text + '\'' +
+                ", code=" + code +
+                '}';
     }
 }

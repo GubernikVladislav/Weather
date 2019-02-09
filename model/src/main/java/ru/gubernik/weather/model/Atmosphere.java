@@ -1,9 +1,11 @@
 package ru.gubernik.weather.model;
 
+import java.io.Serializable;
+
 /**
  * Атмосфера
  */
-public class Atmosphere {
+public class Atmosphere implements Serializable {
 
     /**
      * Влажность
@@ -18,7 +20,9 @@ public class Atmosphere {
     /**
      * Давление
      */
-    private Double presure;
+    private Double pressure;
+
+    private Integer rising;
 
     public Atmosphere() {
     }
@@ -39,11 +43,29 @@ public class Atmosphere {
         this.visibility = visibility;
     }
 
-    public Double getPresure() {
-        return presure;
+    public Double getPressure() {
+        return pressure;
     }
 
-    public void setPresure(Double presure) {
-        this.presure = presure;
+    public void setPressure(Double pressure) {
+        this.pressure = pressure;
+    }
+
+    public Integer getRising() {
+        return rising;
+    }
+
+    public void setRising(Integer rising) {
+        this.rising = rising;
+    }
+
+    @Override
+    public String toString() {
+        return "Atmosphere{" +
+                "humidity=" + humidity +
+                ", visibility=" + visibility +
+                ", pressure=" + pressure +
+                ", rising=" + rising +
+                '}';
     }
 }

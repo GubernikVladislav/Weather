@@ -1,9 +1,11 @@
 package ru.gubernik.weather.model;
 
+import java.io.Serializable;
+
 /**
  * Текущая погода
  */
-public class Observation {
+public class Observation implements Serializable {
 
     /**
      * Ветер
@@ -71,5 +73,16 @@ public class Observation {
 
     public void setPubDate(Long pubDate) {
         this.pubDate = pubDate;
+    }
+
+    @Override
+    public String toString() {
+        return "Observation{" +
+                "wind=" + wind +
+                ", atmosphere=" + atmosphere +
+                ", astronomy=" + astronomy +
+                ", condition=" + condition +
+                ", pubDate=" + pubDate +
+                '}';
     }
 }

@@ -2,16 +2,18 @@ package ru.gubernik.weather.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.io.Serializable;
+
 /**
  * Модель города
  */
-public class Location {
+public class Location implements Serializable {
 
     /**
      * Идентификатор
      */
     @JsonProperty("woeid")
-    private Integer woeId;
+    private Long woeId;
 
     /**
      * Название города
@@ -48,11 +50,11 @@ public class Location {
     public Location() {
     }
 
-    public Integer getWoeId() {
+    public Long getWoeId() {
         return woeId;
     }
 
-    public void setWoeId(Integer woeId) {
+    public void setWoeId(Long woeId) {
         this.woeId = woeId;
     }
 
@@ -102,5 +104,18 @@ public class Location {
 
     public void setTimezoneId(String timezoneId) {
         this.timezoneId = timezoneId;
+    }
+
+    @Override
+    public String toString() {
+        return "Location{" +
+                "woeId=" + woeId +
+                ", city='" + city + '\'' +
+                ", region='" + region + '\'' +
+                ", country='" + country + '\'' +
+                ", lat=" + lat +
+                ", $long=" + $long +
+                ", timezoneId='" + timezoneId + '\'' +
+                '}';
     }
 }

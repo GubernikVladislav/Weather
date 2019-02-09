@@ -1,9 +1,11 @@
 package ru.gubernik.weather.model;
 
+import java.io.Serializable;
+
 /**
  * Ветер
  */
-public class Wind {
+public class Wind implements Serializable {
 
     /**
      *

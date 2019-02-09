@@ -1,9 +1,11 @@
 package ru.gubernik.weather.model;
 
+import java.io.Serializable;
+
 /**
  * Астрономия
  */
-public class Astronomy {
+public class Astronomy implements Serializable {
 
     /**
      * Рассвет
