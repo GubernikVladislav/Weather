@@ -1,7 +1,6 @@
-package ru.gubernik.weather.dbservice.jms;
+package ru.gubernik.weather.dbmodule.jms;
 
-import ru.gubernik.weather.dbservice.service.WeatherService;
-import ru.gubernik.weather.dbservice.service.WeatherServiceImpl;
+import ru.gubernik.weather.dbmodule.service.WeatherService;
 import ru.gubernik.weather.model.Weather;
 
 import javax.annotation.Resource;
@@ -19,11 +18,11 @@ import java.util.logging.Logger;
  */
 @MessageDriven(name = "GbJmsReceiver", activationConfig = {
         @ActivationConfigProperty(propertyName = "destinationLookup",
-            propertyValue = "java:jboss/exported/jms/queue/weather"),
+                propertyValue = "java:jboss/exported/jms/queue/weather"),
         @ActivationConfigProperty(propertyName = "destinationType",
-            propertyValue = "javax.jms.Queue"),
+                propertyValue = "javax.jms.Queue"),
         @ActivationConfigProperty(propertyName = "acknowledgeMode",
-            propertyValue = "Auto-acknowledge")
+                propertyValue = "Auto-acknowledge")
 
 })
 public class JmsReceiver implements MessageListener {
@@ -32,7 +31,6 @@ public class JmsReceiver implements MessageListener {
 
     @Resource
     private MessageDrivenContext mdc;
-
 
     @Inject
     private WeatherService weatherService;
@@ -46,8 +44,8 @@ public class JmsReceiver implements MessageListener {
         try {
             if (message.isBodyAssignableTo(Weather.class)){
                 Weather weather = message.getBody(Weather.class);
-                weatherService.save(weather);
                 log.info(weather.toString());
+                weatherService.save(weather);
             }
         } catch (JMSException e) {
             mdc.setRollbackOnly();

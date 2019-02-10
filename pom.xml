@@ -13,7 +13,7 @@
         <module>AdminApi</module>
         <module>YahooModule</module>
         <module>model</module>
-        <module>DbService</module>
+        <module>DbModule</module>
     </modules>
 
     <properties>
@@ -59,7 +59,7 @@
             <dependency>
                 <groupId>javax.ejb</groupId>
                 <artifactId>ejb-api</artifactId>
-                <version>${javax-ejb}</version>
+                <version>3.0</version>
                 <scope>provided</scope>
             </dependency>
         </dependencies>

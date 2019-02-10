@@ -1,4 +1,4 @@
-package ru.gubernik.weather.dbservice.dao;
+package ru.gubernik.weather.dbmodule.dao;
 
 import ru.gubernik.weather.model.Weather;
 
@@ -8,21 +8,21 @@ import ru.gubernik.weather.model.Weather;
 public interface WeatherDao {
 
     /**
-     * Добавление новой информации о погоде
-     * @param weather - добавляемый объект
+     * Добавление в базу данных новой информации о погоде
+     * @param weather - объект информации о погоде
      */
     void save(Weather weather);
 
     /**
-     * Обновление информации о погоде
-     * @param weather - обновляемый объект
+     * Обновение информации о погоде
+     * @param weather - объект с новой информацией о погоде
      */
     void update(Weather weather);
 
     /**
      * Получение информации о погоде по названию города
      * @param location - название города
-     * @return объект Weather
+     * @return Weather объект с инфрмацией о погоде
      */
     Weather get(String location);
 }
