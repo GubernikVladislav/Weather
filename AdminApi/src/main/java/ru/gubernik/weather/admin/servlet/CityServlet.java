@@ -16,7 +16,6 @@ public class CityServlet extends HttpServlet {
 
     private final JmsSender jmsSender;
 
-
     @Inject
     public CityServlet(JmsSender jmsSender) {
         this.jmsSender = jmsSender;
@@ -34,7 +33,7 @@ public class CityServlet extends HttpServlet {
             setForward(req, resp, "City name must be not null");
             return;
         }else if(!cityName.matches("^[a-zA-Z]+[\\-]?[a-zA-Z]+[\\-]?[a-zA-Z]+$")){
-            setForward(req, resp, "City name must contains only letters");
+            setForward(req, resp, "City name must contains only letters or -");
             return;
         }
 
@@ -45,7 +44,7 @@ public class CityServlet extends HttpServlet {
     /**
      * Перезагрузка .jsp страницы
      */
-    private void setForward(HttpServletRequest req, HttpServletResponse resp, String atribute) throws ServletException, IOException {
+    protected void setForward(HttpServletRequest req, HttpServletResponse resp, String atribute) throws ServletException, IOException {
         req.setAttribute("exception", atribute);
         req.getRequestDispatcher("/index.jsp").forward(req, resp);
     }

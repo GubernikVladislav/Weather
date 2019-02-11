@@ -27,6 +27,16 @@ public class JmsSenderImpl implements JmsSender {
     }
 
     /**
+     * Конструктор для тестов
+     * @param context
+     * @param queue
+     */
+    protected JmsSenderImpl(JMSContext context, Queue queue){
+        this.context = context;
+        this.queue = queue;
+    }
+
+    /**
      * Отправка полученного сообщения в JSM очередь
      * @param message
      */
