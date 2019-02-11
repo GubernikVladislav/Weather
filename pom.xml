@@ -27,10 +27,17 @@
         <spring-web>5.1.4.RELEASE</spring-web>
         <jackson>2.9.4</jackson>
         <javax-ejb>3.0</javax-ejb>
+        <mockito>2.0.2-beta</mockito>
     </properties>
 
     <dependencyManagement>
         <dependencies>
+            <dependency>
+                <groupId>org.mockito</groupId>
+                <artifactId>mockito-all</artifactId>
+                <version>${mockito}</version>
+                <scope>test</scope>
+            </dependency>
             <dependency>
                 <groupId>junit</groupId>
                 <artifactId>junit</artifactId>
