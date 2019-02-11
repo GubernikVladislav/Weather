@@ -40,7 +40,7 @@ public class ModuleServiceImpl implements ModuleService {
             e.printStackTrace();
         }
         Weather weather = jsonMap(jsonString);
-        sendJms(jsonMap(jsonString));
+        sendJms(weather);
     }
 
     /**
@@ -56,9 +56,8 @@ public class ModuleServiceImpl implements ModuleService {
             print("MAPPING SUCCESS");
             return weather;
         } catch (IOException e) {
-            e.printStackTrace();
+            return new Weather();
         }
-        return new Weather() ;
     }
 
     /**

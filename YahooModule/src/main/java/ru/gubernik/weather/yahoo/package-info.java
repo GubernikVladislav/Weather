@@ -1,4 +1,4 @@
 /**
  * Пакет классов для работы с jms
  */
-package ru.gubernik.weather.yahoo.jms;
+package ru.gubernik.weather.yahoo;

@@ -11,7 +11,7 @@ import javax.jms.JMSException;
 import javax.jms.Message;
 import javax.jms.MessageListener;
 
-@MessageDriven(name = "ru.gubernik.weather.yahoo.jms.JmsReceiver", activationConfig = {
+@MessageDriven(name = "JmsReceiver", activationConfig = {
         @ActivationConfigProperty(propertyName = "destinationLookup",
                 propertyValue = "java:/jms/queue/city"),
         @ActivationConfigProperty(propertyName = "destinationType",

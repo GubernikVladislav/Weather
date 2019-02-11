@@ -27,11 +27,23 @@ public class JmsSenderImpl implements JmsSender {
     }
 
     /**
+     * Конструктор для тестов
+     * @param context
+     * @param queue
+     */
+    protected  JmsSenderImpl(JMSContext context, Queue queue){
+        this.context = context;
+        this.queue = queue;
+    }
+
+    /**
      * {@inheritDoc}
      */
     @Override
     public void send(Weather weather) {
-        Message message = context.createObjectMessage(weather);
-        context.createProducer().send((Destination) queue, message);
+        if (weather != null) {
+            Message message = context.createObjectMessage(weather);
+            context.createProducer().send((Destination) queue, message);
+        }
     }
 }
