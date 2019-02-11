@@ -3,6 +3,7 @@ package ru.gubernik.weather.model;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 /**
  * Модель города
@@ -117,5 +118,24 @@ public class Location implements Serializable {
                 ", $long=" + $long +
                 ", timezoneId='" + timezoneId + '\'' +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Location location = (Location) o;
+        return Objects.equals(woeId, location.woeId) &&
+                Objects.equals(city, location.city) &&
+                Objects.equals(region, location.region) &&
+                Objects.equals(country, location.country) &&
+                Objects.equals(lat, location.lat) &&
+                Objects.equals($long, location.$long) &&
+                Objects.equals(timezoneId, location.timezoneId);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(woeId, city, region, country, lat, $long, timezoneId);
     }
 }

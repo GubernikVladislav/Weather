@@ -1,6 +1,7 @@
 package ru.gubernik.weather.model;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 /**
  * Текущая погода
@@ -84,5 +85,22 @@ public class Observation implements Serializable {
                 ", condition=" + condition +
                 ", pubDate=" + pubDate +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Observation that = (Observation) o;
+        return Objects.equals(wind, that.wind) &&
+                Objects.equals(atmosphere, that.atmosphere) &&
+                Objects.equals(astronomy, that.astronomy) &&
+                Objects.equals(condition, that.condition) &&
+                Objects.equals(pubDate, that.pubDate);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(wind, atmosphere, astronomy, condition, pubDate);
     }
 }

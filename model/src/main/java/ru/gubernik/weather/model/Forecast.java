@@ -1,6 +1,7 @@
 package ru.gubernik.weather.model;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 /**
  * Прогноз
@@ -98,5 +99,23 @@ public class Forecast implements Serializable {
                 ", text='" + text + '\'' +
                 ", code=" + code +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Forecast forecast = (Forecast) o;
+        return Objects.equals(day, forecast.day) &&
+                Objects.equals(date, forecast.date) &&
+                Objects.equals(low, forecast.low) &&
+                Objects.equals(high, forecast.high) &&
+                Objects.equals(text, forecast.text) &&
+                Objects.equals(code, forecast.code);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(day, date, low, high, text, code);
     }
 }

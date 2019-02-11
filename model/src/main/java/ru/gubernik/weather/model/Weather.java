@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Objects;
+
 /**
  * Модель погоды по шаблону ответа Yahoo Weather
  */
@@ -59,5 +61,20 @@ public class Weather implements Serializable {
                 ", currentObservation=" + currentObservation +
                 ", forecasts=" + forecasts +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Weather weather = (Weather) o;
+        return Objects.equals(location, weather.location) &&
+                Objects.equals(currentObservation, weather.currentObservation) &&
+                Objects.equals(forecasts, weather.forecasts);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(location, currentObservation, forecasts);
     }
 }

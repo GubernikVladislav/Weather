@@ -1,6 +1,7 @@
 package ru.gubernik.weather.model;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 /**
  * Атмосфера
@@ -67,5 +68,21 @@ public class Atmosphere implements Serializable {
                 ", pressure=" + pressure +
                 ", rising=" + rising +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Atmosphere that = (Atmosphere) o;
+        return Objects.equals(humidity, that.humidity) &&
+                Objects.equals(visibility, that.visibility) &&
+                Objects.equals(pressure, that.pressure) &&
+                Objects.equals(rising, that.rising);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(humidity, visibility, pressure, rising);
     }
 }
