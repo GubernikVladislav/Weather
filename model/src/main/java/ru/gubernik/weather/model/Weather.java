@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -26,7 +27,7 @@ public class Weather implements Serializable {
 
     @JsonIgnore
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @JsonIgnore
@@ -34,13 +35,13 @@ public class Weather implements Serializable {
     private Integer version;
 
     @JsonIgnore
-    @Column(name = "LOCATION")
+    @Column(name = "location")
     private String cityName;
 
     /**
      * Город
      */
-    @OneToOne(mappedBy = "weather", cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "weather", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Location location;
 
     /**

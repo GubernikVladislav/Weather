@@ -29,6 +29,7 @@
         <jackson>2.9.4</jackson>
         <javax-ejb>3.0</javax-ejb>
         <mockito>2.0.2-beta</mockito>
+        <java-persistence>2.2</java-persistence>
     </properties>
 
     <dependencyManagement>

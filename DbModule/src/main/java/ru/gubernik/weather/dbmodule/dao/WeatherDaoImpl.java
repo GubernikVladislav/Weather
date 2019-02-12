@@ -1,11 +1,17 @@
 package ru.gubernik.weather.dbmodule.dao;
 
+import ru.gubernik.weather.model.Forecast;
 import ru.gubernik.weather.model.Weather;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.inject.Produces;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
+import java.util.List;
 
 /**
  * {@inheritDoc}
@@ -23,6 +29,20 @@ public class WeatherDaoImpl implements WeatherDao {
      */
     @Override
     public void save(Weather weather) {
+
+        weather.getCurrentObservation().getWind().setObservation(weather.getCurrentObservation());
+        weather.getCurrentObservation().getAstronomy().setObservation(weather.getCurrentObservation());
+        weather.getCurrentObservation().getAtmosphere().setObservation(weather.getCurrentObservation());
+        weather.getCurrentObservation().getCondition().setObservation(weather.getCurrentObservation());
+
+        weather.getCurrentObservation().setWeather(weather);
+        weather.getLocation().setWeather(weather);
+        weather.setCityName(weather.getLocation().getCity());
+
+        for(Forecast forecast : weather.getForecasts()){
+            forecast.setWeather(weather);
+        }
+
         entityManager.persist(weather);
     }
 
@@ -39,6 +59,15 @@ public class WeatherDaoImpl implements WeatherDao {
      */
     @Override
     public Weather get(String location) {
-        return null;
+
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        CriteriaQuery criteriaQuery = criteriaBuilder.createQuery(Weather.class);
+        Root root = criteriaQuery.from(Weather.class);
+
+        criteriaQuery.where(criteriaBuilder.equal(root.get("location"), location ));
+
+        TypedQuery query = entityManager.createQuery(criteriaQuery);
+        Weather weather = (Weather) query.getSingleResult();
+        return weather;
     }
 }

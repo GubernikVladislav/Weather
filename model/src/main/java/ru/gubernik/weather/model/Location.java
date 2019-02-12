@@ -25,7 +25,7 @@ public class Location implements Serializable {
 
     @JsonIgnore
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @JsonIgnore
@@ -71,7 +71,7 @@ public class Location implements Serializable {
     private Double lon;
 
     @JsonIgnore
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne()
     @JoinColumn(name = "weather_id")
     private Weather weather;
 

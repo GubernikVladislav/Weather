@@ -24,7 +24,7 @@ public class Observation implements Serializable {
 
     @JsonIgnore
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @JsonIgnore
@@ -40,25 +40,25 @@ public class Observation implements Serializable {
     /**
      * Ветер
      */
-    @OneToOne(mappedBy = "observation")
+    @OneToOne(mappedBy = "observation", cascade = CascadeType.PERSIST)
     private Wind wind;
 
     /**
      * Атмосфера
      */
-    @OneToOne(mappedBy = "observation")
+    @OneToOne(mappedBy = "observation", cascade = CascadeType.ALL)
     private Atmosphere atmosphere;
 
     /**
      * Астрономия
      */
-    @OneToOne(mappedBy = "observation")
+    @OneToOne(mappedBy = "observation", cascade = CascadeType.ALL)
     private Astronomy astronomy;
 
     /**
      * Погодные условия
      */
-    @OneToOne(mappedBy = "observation")
+    @OneToOne(mappedBy = "observation", cascade = CascadeType.ALL)
     private Condition condition;
 
     @JsonIgnore

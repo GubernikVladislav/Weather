@@ -24,7 +24,7 @@ public class Wind implements Serializable {
 
     @JsonIgnore
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @JsonIgnore
@@ -51,7 +51,7 @@ public class Wind implements Serializable {
 
     @JsonIgnore
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "obs_id")
+    @JoinColumn(name = "obs_id", referencedColumnName = "id")
     private Observation observation;
 
     public Wind() {
