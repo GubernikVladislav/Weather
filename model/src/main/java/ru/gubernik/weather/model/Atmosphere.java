@@ -1,31 +1,83 @@
 package ru.gubernik.weather.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+import javax.persistence.Version;
 import java.io.Serializable;
 import java.util.Objects;
 
 /**
  * Атмосфера
  */
+@Entity
+@Table(name = "atmosphere")
 public class Atmosphere implements Serializable {
+
+    @JsonIgnore
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Integer id;
+
+    @JsonIgnore
+    @Version
+    private Integer version;
 
     /**
      * Влажность
      */
+    @Column(name = "humidity")
     private Integer humidity;
 
     /**
      * Видимость
      */
+    @Column(name = "visibility")
     private Integer visibility;
 
     /**
      * Давление
      */
+    @Column(name = "pressure")
     private Double pressure;
 
+    @Column(name = "rising")
     private Integer rising;
 
+    @JsonIgnore
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "obs_id")
+    private Observation observation;
+
     public Atmosphere() {
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public Integer getVersion() {
+        return version;
+    }
+
+    public Observation getObservation() {
+        return observation;
+    }
+
+    public void setVersion(Integer version) {
+        this.version = version;
+    }
+
+    public void setObservation(Observation observation) {
+        this.observation = observation;
     }
 
     public Integer getHumidity() {
@@ -75,14 +127,17 @@ public class Atmosphere implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Atmosphere that = (Atmosphere) o;
-        return Objects.equals(humidity, that.humidity) &&
+        return Objects.equals(id, that.id) &&
+                Objects.equals(version, that.version) &&
+                Objects.equals(humidity, that.humidity) &&
                 Objects.equals(visibility, that.visibility) &&
                 Objects.equals(pressure, that.pressure) &&
-                Objects.equals(rising, that.rising);
+                Objects.equals(rising, that.rising) &&
+                Objects.equals(observation, that.observation);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(humidity, visibility, pressure, rising);
+        return Objects.hash(id, version, humidity, visibility, pressure, rising, observation);
     }
 }

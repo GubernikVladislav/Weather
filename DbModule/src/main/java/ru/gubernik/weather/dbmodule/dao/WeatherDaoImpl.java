@@ -3,6 +3,9 @@ package ru.gubernik.weather.dbmodule.dao;
 import ru.gubernik.weather.model.Weather;
 
 import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.inject.Produces;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 
 /**
  * {@inheritDoc}
@@ -10,12 +13,17 @@ import javax.enterprise.context.ApplicationScoped;
 @ApplicationScoped
 public class WeatherDaoImpl implements WeatherDao {
 
+    @SuppressWarnings("unused")
+    @Produces
+    @PersistenceContext
+    private EntityManager entityManager;
+
     /**
      * {@inheritDoc}
      */
     @Override
     public void save(Weather weather) {
-
+        entityManager.persist(weather);
     }
 
     /**

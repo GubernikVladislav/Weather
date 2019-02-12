@@ -1,54 +1,96 @@
 package ru.gubernik.weather.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+import javax.persistence.Version;
 import java.io.Serializable;
 import java.util.Objects;
 
 /**
  * Модель города
  */
+@Entity
+@Table(name = "LOCATION")
 public class Location implements Serializable {
+
+    @JsonIgnore
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Integer id;
+
+    @JsonIgnore
+    @Version
+    private Integer version;
 
     /**
      * Идентификатор
      */
     @JsonProperty("woeid")
+    @Column(name = "woeid")
     private Long woeId;
 
     /**
      * Название города
      */
+    @Column(name = "city")
     private String city;
 
     /**
      * Регион
      */
+    @Column(name = "region")
     private String region;
 
     /**
      * Страна
      */
+    @Column(name = "country")
     private String country;
 
     /**
      * Широта
      */
+    @Column(name = "lat")
     private Double lat;
 
     /**
      * Долгота
      */
     @JsonProperty("long")
-    private Double $long;
+    @Column(name = "long")
+    private Double lon;
+
+    @JsonIgnore
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "weather_id")
+    private Weather weather;
 
     /**
      * Часовой пояс
      */
     @JsonProperty("timezone_id")
+    @Column(name = "timezone_id")
     private String timezoneId;
 
     public Location() {
+    }
+
+    public Weather getWeather() {
+        return weather;
+    }
+
+    public void setWeather(Weather weather) {
+        this.weather = weather;
     }
 
     public Long getWoeId() {
@@ -91,12 +133,12 @@ public class Location implements Serializable {
         this.lat = lat;
     }
 
-    public double get$long() {
-        return $long;
+    public double getLon() {
+        return lon;
     }
 
-    public void set$long(double $long) {
-        this.$long = $long;
+    public void setLon(double lon) {
+        this.lon = lon;
     }
 
     public String getTimezoneId() {
@@ -107,6 +149,18 @@ public class Location implements Serializable {
         this.timezoneId = timezoneId;
     }
 
+    public Integer getId() {
+        return id;
+    }
+
+    public Integer getVersion() {
+        return version;
+    }
+
+    public void setVersion(Integer version) {
+        this.version = version;
+    }
+
     @Override
     public String toString() {
         return "Location{" +
@@ -115,7 +169,7 @@ public class Location implements Serializable {
                 ", region='" + region + '\'' +
                 ", country='" + country + '\'' +
                 ", lat=" + lat +
-                ", $long=" + $long +
+                ", $long=" + lon +
                 ", timezoneId='" + timezoneId + '\'' +
                 '}';
     }
@@ -130,12 +184,12 @@ public class Location implements Serializable {
                 Objects.equals(region, location.region) &&
                 Objects.equals(country, location.country) &&
                 Objects.equals(lat, location.lat) &&
-                Objects.equals($long, location.$long) &&
+                Objects.equals(lon, location.lon) &&
                 Objects.equals(timezoneId, location.timezoneId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(woeId, city, region, country, lat, $long, timezoneId);
+        return Objects.hash(woeId, city, region, country, lat, lon, timezoneId);
     }
 }

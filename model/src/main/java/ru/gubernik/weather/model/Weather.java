@@ -1,7 +1,18 @@
 package ru.gubernik.weather.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+import javax.persistence.Version;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
@@ -9,22 +20,40 @@ import java.util.Objects;
 /**
  * Модель погоды по шаблону ответа Yahoo Weather
  */
+@Entity
+@Table(name = "WEATHER")
 public class Weather implements Serializable {
+
+    @JsonIgnore
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Integer id;
+
+    @JsonIgnore
+    @Version
+    private Integer version;
+
+    @JsonIgnore
+    @Column(name = "LOCATION")
+    private String cityName;
 
     /**
      * Город
      */
+    @OneToOne(mappedBy = "weather", cascade = CascadeType.ALL)
     private Location location;
 
     /**
      * Текущая погода
      */
     @JsonProperty("current_observation")
+    @OneToOne(mappedBy = "weather", cascade = CascadeType.ALL)
     private Observation currentObservation;
 
     /**
      * Прогноз на неделю
      */
+    @OneToMany(mappedBy = "weather", cascade = CascadeType.ALL)
     private List<Forecast> forecasts;
 
     public Weather() {
@@ -52,6 +81,26 @@ public class Weather implements Serializable {
 
     public void setForecasts(List<Forecast> forecasts) {
         this.forecasts = forecasts;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public Integer getVersion() {
+        return version;
+    }
+
+    public String getCityName() {
+        return cityName;
+    }
+
+    public void setVersion(Integer version) {
+        this.version = version;
+    }
+
+    public void setCityName(String cityName) {
+        this.cityName = cityName;
     }
 
     @Override

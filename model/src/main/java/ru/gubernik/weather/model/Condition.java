@@ -1,29 +1,80 @@
 package ru.gubernik.weather.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+import javax.persistence.Version;
 import java.io.Serializable;
 import java.util.Objects;
 
 /**
  * Условия
  */
+@Entity
+@Table(name = "condition")
 public class Condition implements Serializable {
+
+    @JsonIgnore
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Integer id;
+
+    @JsonIgnore
+    @Version
+    private Integer version;
 
     /**
      * Описание
      */
+    @Column(name = "text")
     private String text;
 
     /**
      * Код
      */
+    @Column(name = "code")
     private Integer code;
 
     /**
      * Температура
      */
+    @Column(name = "temperature")
     private Integer temperature;
 
+    @JsonIgnore
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "obs_id")
+    private Observation observation;
+
     public Condition() {
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public Integer getVersion() {
+        return version;
+    }
+
+    public Observation getObservation() {
+        return observation;
+    }
+
+    public void setVersion(Integer version) {
+        this.version = version;
+    }
+
+    public void setObservation(Observation observation) {
+        this.observation = observation;
     }
 
     public String getText() {
@@ -64,13 +115,16 @@ public class Condition implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Condition condition = (Condition) o;
-        return Objects.equals(text, condition.text) &&
+        return Objects.equals(id, condition.id) &&
+                Objects.equals(version, condition.version) &&
+                Objects.equals(text, condition.text) &&
                 Objects.equals(code, condition.code) &&
-                Objects.equals(temperature, condition.temperature);
+                Objects.equals(temperature, condition.temperature) &&
+                Objects.equals(observation, condition.observation);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(text, code, temperature);
+        return Objects.hash(id, version, text, code, temperature, observation);
     }
 }

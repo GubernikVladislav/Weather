@@ -14,6 +14,7 @@
         <module>YahooModule</module>
         <module>model</module>
         <module>DbModule</module>
+        <module>WeatherService</module>
     </modules>
 
     <properties>
@@ -66,7 +67,7 @@
             <dependency>
                 <groupId>javax.ejb</groupId>
                 <artifactId>ejb-api</artifactId>
-                <version>3.0</version>
+                <version>${javax-ejb}</version>
                 <scope>provided</scope>
             </dependency>
         </dependencies>

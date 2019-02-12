@@ -1,29 +1,80 @@
 package ru.gubernik.weather.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+import javax.persistence.Version;
 import java.io.Serializable;
 import java.util.Objects;
 
 /**
  * Ветер
  */
+@Entity
+@Table(name = "WIND")
 public class Wind implements Serializable {
+
+    @JsonIgnore
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Integer id;
+
+    @JsonIgnore
+    @Version
+    private Integer version;
 
     /**
      *
      */
+    @Column(name = "chill")
     private Integer chill;
 
     /**
      * Направление
      */
+    @Column(name = "direction")
     private Integer direction;
 
     /**
      * Скорость
      */
+    @Column(name = "speed")
     private Double speed;
 
+    @JsonIgnore
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "obs_id")
+    private Observation observation;
+
     public Wind() {
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public Integer getVersion() {
+        return version;
+    }
+
+    public void setVersion(Integer version) {
+        this.version = version;
+    }
+
+    public void setObservation(Observation observation) {
+        this.observation = observation;
+    }
+
+    public Observation getObservation() {
+        return observation;
     }
 
     public Integer getChill() {
@@ -64,13 +115,16 @@ public class Wind implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Wind wind = (Wind) o;
-        return Objects.equals(chill, wind.chill) &&
+        return Objects.equals(id, wind.id) &&
+                Objects.equals(version, wind.version) &&
+                Objects.equals(chill, wind.chill) &&
                 Objects.equals(direction, wind.direction) &&
-                Objects.equals(speed, wind.speed);
+                Objects.equals(speed, wind.speed) &&
+                Objects.equals(observation, wind.observation);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(chill, direction, speed);
+        return Objects.hash(id, version, chill, direction, speed, observation);
     }
 }
