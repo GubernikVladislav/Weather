@@ -1,7 +1,7 @@
 package ru.gubernik.weather.dbmodule.service;
 
-import ru.gubernik.weather.dbmodule.model.Location;
-import ru.gubernik.weather.dbmodule.model.Weather;
+import ru.gubernik.weather.model.Location;
+import ru.gubernik.weather.model.Weather;
 
 import java.util.List;
 

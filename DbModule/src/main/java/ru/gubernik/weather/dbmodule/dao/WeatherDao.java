@@ -1,6 +1,6 @@
 package ru.gubernik.weather.dbmodule.dao;
 
-import ru.gubernik.weather.dbmodule.model.Weather;
+import ru.gubernik.weather.model.Weather;
 
 /**
  * Dao для работы с базой данных о погоде
