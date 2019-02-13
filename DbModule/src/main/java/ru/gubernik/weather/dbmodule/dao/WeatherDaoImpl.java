@@ -1,7 +1,7 @@
 package ru.gubernik.weather.dbmodule.dao;
 
-import ru.gubernik.weather.model.Forecast;
-import ru.gubernik.weather.model.Weather;
+import ru.gubernik.weather.dbmodule.model.Forecast;
+import ru.gubernik.weather.dbmodule.model.Weather;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.inject.Produces;
@@ -21,7 +21,7 @@ public class WeatherDaoImpl implements WeatherDao {
 
     @SuppressWarnings("unused")
     @Produces
-    @PersistenceContext
+    @PersistenceContext(name = "Postgres")
     private EntityManager entityManager;
 
     /**

@@ -1,7 +1,7 @@
 package ru.gubernik.weather.dbmodule.jms;
 
 import ru.gubernik.weather.dbmodule.service.WeatherService;
-import ru.gubernik.weather.model.Weather;
+import ru.gubernik.weather.dbmodule.model.Weather;
 
 import javax.annotation.Resource;
 import javax.ejb.ActivationConfigProperty;

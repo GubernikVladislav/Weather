@@ -2,8 +2,8 @@ package ru.gubernik.weather.dbmodule.service;
 
 import org.springframework.transaction.annotation.Transactional;
 import ru.gubernik.weather.dbmodule.dao.WeatherDao;
-import ru.gubernik.weather.model.Location;
-import ru.gubernik.weather.model.Weather;
+import ru.gubernik.weather.dbmodule.model.Location;
+import ru.gubernik.weather.dbmodule.model.Weather;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
