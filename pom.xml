@@ -12,7 +12,7 @@
     <modules>
         <module>AdminApi</module>
         <module>YahooModule</module>
-        <module>model</module>
+        <module>db_service_api</module>
         <module>DbModule</module>
         <module>WeatherService</module>
     </modules>
@@ -70,6 +70,11 @@
                 <artifactId>ejb-api</artifactId>
                 <version>${javax-ejb}</version>
                 <scope>provided</scope>
+            </dependency>
+            <dependency>
+                <groupId>javax.persistence</groupId>
+                <artifactId>javax.persistence-api</artifactId>
+                <version>${java-persistence}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

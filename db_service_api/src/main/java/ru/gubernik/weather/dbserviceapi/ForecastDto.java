@@ -1,98 +1,44 @@
-package ru.gubernik.weather.model;
+package ru.gubernik.weather.dbserviceapi;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-import javax.persistence.Version;
 import java.io.Serializable;
 import java.util.Objects;
 
 /**
  * Прогноз
  */
-@Entity
-@Table(name = "forecast")
-public class Forecast implements Serializable {
-
-    @JsonIgnore
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
-
-    @JsonIgnore
-    @Version
-    private Integer version;
+public class ForecastDto implements Serializable {
 
     /**
      * День недели
      */
-    @Column(name = "day")
     private String day;
 
     /**
      * Дата
      */
-    @Column(name = "date")
     private Long date;
 
     /**
      * Макс. температура
      */
-    @Column(name = "low")
     private Integer low;
 
     /**
      * Мин. температура
      */
-    @Column(name = "high")
     private Integer high;
 
     /**
      * Описание
      */
-    @Column(name = "text")
     private String text;
 
     /**
      * Код
      */
-    @Column(name = "code")
     private Integer code;
 
-    @JsonIgnore
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "weather_id")
-    private Weather weather;
-
-    public Forecast() {
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public Integer getVersion() {
-        return version;
-    }
-
-    public Weather getWeather() {
-        return weather;
-    }
-
-    public void setVersion(Integer version) {
-        this.version = version;
-    }
-
-    public void setWeather(Weather weather) {
-        this.weather = weather;
+    public ForecastDto() {
     }
 
     public String getDay() {
@@ -145,7 +91,7 @@ public class Forecast implements Serializable {
 
     @Override
     public String toString() {
-        return "Forecast{" +
+        return "ForecastDto{" +
                 "day='" + day + '\'' +
                 ", date=" + date +
                 ", low=" + low +
@@ -159,20 +105,17 @@ public class Forecast implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Forecast forecast = (Forecast) o;
-        return Objects.equals(id, forecast.id) &&
-                Objects.equals(version, forecast.version) &&
-                Objects.equals(day, forecast.day) &&
+        ForecastDto forecast = (ForecastDto) o;
+        return Objects.equals(day, forecast.day) &&
                 Objects.equals(date, forecast.date) &&
                 Objects.equals(low, forecast.low) &&
                 Objects.equals(high, forecast.high) &&
                 Objects.equals(text, forecast.text) &&
-                Objects.equals(code, forecast.code) &&
-                Objects.equals(weather, forecast.weather);
+                Objects.equals(code, forecast.code);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, version, day, date, low, high, text, code, weather);
+        return Objects.hash(day, date, low, high, text, code);
     }
 }

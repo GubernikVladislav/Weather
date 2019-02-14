@@ -1,96 +1,54 @@
-package ru.gubernik.weather.model;
+package ru.gubernik.weather.dbserviceapi;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
-import javax.persistence.Version;
 import java.io.Serializable;
 import java.util.Objects;
 
 /**
  * Модель города
  */
-@Entity
-@Table(name = "LOCATION")
-public class Location implements Serializable {
-
-    @JsonIgnore
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
-
-    @JsonIgnore
-    @Version
-    private Integer version;
+public class LocationDto implements Serializable {
 
     /**
      * Идентификатор
      */
     @JsonProperty("woeid")
-    @Column(name = "woeid")
     private Long woeId;
 
     /**
      * Название города
      */
-    @Column(name = "city")
     private String city;
 
     /**
      * Регион
      */
-    @Column(name = "region")
     private String region;
 
     /**
      * Страна
      */
-    @Column(name = "country")
     private String country;
 
     /**
      * Широта
      */
-    @Column(name = "lat")
     private Double lat;
 
     /**
      * Долгота
      */
     @JsonProperty("long")
-    @Column(name = "long")
     private Double lon;
-
-    @JsonIgnore
-    @OneToOne()
-    @JoinColumn(name = "weather_id")
-    private Weather weather;
 
     /**
      * Часовой пояс
      */
     @JsonProperty("timezone_id")
-    @Column(name = "timezone_id")
     private String timezoneId;
 
-    public Location() {
-    }
-
-    public Weather getWeather() {
-        return weather;
-    }
-
-    public void setWeather(Weather weather) {
-        this.weather = weather;
+    public LocationDto() {
     }
 
     public Long getWoeId() {
@@ -149,21 +107,9 @@ public class Location implements Serializable {
         this.timezoneId = timezoneId;
     }
 
-    public Integer getId() {
-        return id;
-    }
-
-    public Integer getVersion() {
-        return version;
-    }
-
-    public void setVersion(Integer version) {
-        this.version = version;
-    }
-
     @Override
     public String toString() {
-        return "Location{" +
+        return "LocationDto{" +
                 "woeId=" + woeId +
                 ", city='" + city + '\'' +
                 ", region='" + region + '\'' +
@@ -178,7 +124,7 @@ public class Location implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Location location = (Location) o;
+        LocationDto location = (LocationDto) o;
         return Objects.equals(woeId, location.woeId) &&
                 Objects.equals(city, location.city) &&
                 Objects.equals(region, location.region) &&
