@@ -1,6 +1,6 @@
 package ru.gubernik.weather.yahoo.jms;
 
-import ru.gubernik.weather.dbserviceapi.WeatherDto;
+import ru.gubernik.weather.dbserviceapi.model.WeatherDto;
 
 /**
  * Интерфейс отправки jms сообщения

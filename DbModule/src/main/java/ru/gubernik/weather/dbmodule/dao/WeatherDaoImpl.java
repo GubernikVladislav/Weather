@@ -1,11 +1,13 @@
 package ru.gubernik.weather.dbmodule.dao;
 
 import ru.gubernik.weather.dbmodule.model.Forecast;
+import ru.gubernik.weather.dbmodule.model.Location;
 import ru.gubernik.weather.dbmodule.model.Weather;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import java.util.List;
 
 /**
  * {@inheritDoc}
@@ -54,7 +56,14 @@ public class WeatherDaoImpl implements WeatherDao {
      */
     @Override
     public Weather get(String location) {
+        return null;
+    }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public List<Location> getLocationList() {
         return null;
     }
 }

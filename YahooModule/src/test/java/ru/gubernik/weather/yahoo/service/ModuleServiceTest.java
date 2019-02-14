@@ -9,7 +9,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Spy;
 import org.mockito.runners.MockitoJUnitRunner;
-import ru.gubernik.weather.dbserviceapi.WeatherDto;
+import ru.gubernik.weather.dbserviceapi.model.WeatherDto;
 import ru.gubernik.weather.yahoo.jms.JmsSender;
 import ru.gubernik.weather.yahoo.service.module.ModuleServiceImpl;
 import ru.gubernik.weather.yahoo.service.yahoo.YahooService;

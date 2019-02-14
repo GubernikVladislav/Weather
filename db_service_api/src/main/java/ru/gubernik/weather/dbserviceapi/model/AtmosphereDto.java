@@ -1,4 +1,4 @@
-package ru.gubernik.weather.dbserviceapi;
+package ru.gubernik.weather.dbserviceapi.model;
 
 import java.io.Serializable;
 import java.util.Objects;

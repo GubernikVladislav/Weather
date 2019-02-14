@@ -5,16 +5,4 @@
        xsi:schemaLocation = "http://www.springframework.org/schema/beans
    http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
 
-    <bean id="weatherDao" class="ru.gubernik.weather.dbmodule.dao.WeatherDaoImpl">
-
-    </bean>
-
-    <bean  id = "weatherService"  class = "ru.gubernik.weather.dbmodule.service.WeatherServiceImpl" >
-        <constructor-arg ref="weatherDao"/>
-    </bean>
-
-    <bean  name = "/WeatherService"  class = "org.springframework.remoting.caucho.HessianServiceExporter" >
-        <property  name = "service"  ref = "weatherService" />
-        <property  name = "serviceInterface"  value = "ru.gubernik.weather.dbmodule.service.WeatherService" />
-    </bean>
 </beans>

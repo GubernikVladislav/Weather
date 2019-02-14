@@ -4,8 +4,8 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.gubernik.weather.dbmodule.dao.WeatherDao;
 import ru.gubernik.weather.dbmodule.mapper.MapperFacade;
 import ru.gubernik.weather.dbmodule.model.Weather;
-import ru.gubernik.weather.dbserviceapi.LocationDto;
-import ru.gubernik.weather.dbserviceapi.WeatherDto;
+import ru.gubernik.weather.dbserviceapi.model.LocationDto;
+import ru.gubernik.weather.dbserviceapi.model.WeatherDto;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -25,14 +25,6 @@ public class WeatherServiceImpl implements WeatherService {
 
     public WeatherServiceImpl(){
 
-    }
-
-    public WeatherServiceImpl(WeatherDao weatherDao) {
-        this.weatherDao = weatherDao;
-    }
-
-    public void weatherDao(WeatherDao weatherDao) {
-        this.weatherDao = weatherDao;
     }
 
     /**

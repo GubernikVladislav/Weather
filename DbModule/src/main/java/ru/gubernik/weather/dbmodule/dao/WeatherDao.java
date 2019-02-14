@@ -1,6 +1,9 @@
 package ru.gubernik.weather.dbmodule.dao;
 
+import ru.gubernik.weather.dbmodule.model.Location;
 import ru.gubernik.weather.dbmodule.model.Weather;
+
+import java.util.List;
 
 /**
  * Dao для работы с базой данных о погоде
@@ -25,4 +28,10 @@ public interface WeatherDao {
      * @return WeatherDto объект с инфрмацией о погоде
      */
     Weather get(String location);
+
+    /**
+     * Получение списка доступных городов
+     * @return Список объектов Location
+     */
+    List<Location> getLocationList();
 }

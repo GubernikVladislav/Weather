@@ -31,7 +31,6 @@
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>javax.servlet-api</artifactId>
-            <version>3.1.0</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
@@ -53,30 +52,25 @@
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-context</artifactId>
-            <version>5.1.4.RELEASE</version>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-webmvc</artifactId>
-            <version>5.1.4.RELEASE</version>
         </dependency>
 
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-remoting</artifactId>
-            <version>2.0.8</version>
         </dependency>
 
         <dependency>
             <groupId>com.caucho</groupId>
             <artifactId>hessian</artifactId>
-            <version>4.0.38</version>
         </dependency>
 
         <dependency>
             <groupId>org.reactivestreams</groupId>
             <artifactId>reactive-streams</artifactId>
-            <version>1.0.1</version>
         </dependency>
     </dependencies>
 

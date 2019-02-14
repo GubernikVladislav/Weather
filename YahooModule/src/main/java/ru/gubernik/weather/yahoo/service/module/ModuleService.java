@@ -1,6 +1,6 @@
 package ru.gubernik.weather.yahoo.service.module;
 
-import ru.gubernik.weather.dbserviceapi.WeatherDto;
+import ru.gubernik.weather.dbserviceapi.model.WeatherDto;
 
 /**
  * Сервис

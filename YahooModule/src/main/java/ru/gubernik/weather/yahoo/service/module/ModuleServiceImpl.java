@@ -1,14 +1,13 @@
 package ru.gubernik.weather.yahoo.service.module;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import ru.gubernik.weather.dbserviceapi.WeatherDto;
+import ru.gubernik.weather.dbserviceapi.model.WeatherDto;
 import ru.gubernik.weather.yahoo.jms.JmsSender;
 import ru.gubernik.weather.yahoo.service.yahoo.YahooService;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 
 /**
  * {@inheritDoc}
@@ -30,12 +29,9 @@ public class ModuleServiceImpl implements ModuleService {
      */
     @Override
     public void request(String location) {
-        String jsonString = null;
-        try {
-            jsonString = yahooService.createYahooRequest(location);
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
+
+        String jsonString;
+        jsonString = yahooService.createYahooRequest(location);
         WeatherDto weather = jsonMap(jsonString);
         sendJms(weather);
     }

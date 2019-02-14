@@ -1,6 +1,6 @@
 package ru.gubernik.weather.yahoo.jms;
 
-import ru.gubernik.weather.dbserviceapi.WeatherDto;
+import ru.gubernik.weather.dbserviceapi.model.WeatherDto;
 
 import javax.annotation.Resource;
 import javax.enterprise.context.ApplicationScoped;

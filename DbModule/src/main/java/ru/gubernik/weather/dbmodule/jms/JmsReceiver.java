@@ -1,7 +1,7 @@
 package ru.gubernik.weather.dbmodule.jms;
 
 import ru.gubernik.weather.dbmodule.service.WeatherService;
-import ru.gubernik.weather.dbserviceapi.WeatherDto;
+import ru.gubernik.weather.dbserviceapi.model.WeatherDto;
 
 import javax.annotation.Resource;
 import javax.ejb.ActivationConfigProperty;
@@ -11,7 +11,6 @@ import javax.inject.Inject;
 import javax.jms.JMSException;
 import javax.jms.Message;
 import javax.jms.MessageListener;
-import java.util.logging.Logger;
 
 /**
  * Слушатель Jms очереди jms/queue/weather
@@ -26,8 +25,6 @@ import java.util.logging.Logger;
 
 })
 public class JmsReceiver implements MessageListener {
-
-    private Logger log = Logger.getLogger(JmsReceiver.class.getName());
 
     @Resource
     private MessageDrivenContext mdc;
@@ -44,10 +41,8 @@ public class JmsReceiver implements MessageListener {
         try {
             WeatherDto weather = message.getBody(WeatherDto.class);
             weatherService.save(weather);
-            log.info(weather.toString());
-
         } catch (JMSException e) {
-            mdc.setRollbackOnly();
+            throw new RuntimeException("Jms message error", e);
         }
     }
 }

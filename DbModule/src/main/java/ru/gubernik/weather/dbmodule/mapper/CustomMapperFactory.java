@@ -6,6 +6,9 @@ import org.springframework.beans.factory.FactoryBean;
 
 import javax.enterprise.context.ApplicationScoped;
 
+/**
+ * Кастомный mapperFactory
+ */
 @ApplicationScoped
 public class CustomMapperFactory implements FactoryBean<MapperFactory> {
     @Override

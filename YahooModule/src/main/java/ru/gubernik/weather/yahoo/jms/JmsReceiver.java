@@ -11,6 +11,9 @@ import javax.jms.JMSException;
 import javax.jms.Message;
 import javax.jms.MessageListener;
 
+/**
+ * Слушатель Jms очереди java:/jms/queue/city
+ */
 @MessageDriven(name = "JmsReceiver", activationConfig = {
         @ActivationConfigProperty(propertyName = "destinationLookup",
                 propertyValue = "java:/jms/queue/city"),
@@ -34,7 +37,7 @@ public class JmsReceiver implements MessageListener {
                 moduleService.request(location);
             }
         } catch (JMSException e) {
-            mdc.setRollbackOnly();
+            throw new RuntimeException("Jms message error", e);
         }
     }
 }

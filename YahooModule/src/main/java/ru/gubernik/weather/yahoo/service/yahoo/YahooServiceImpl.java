@@ -29,7 +29,7 @@ public class YahooServiceImpl implements YahooService {
      * {@inheritDoc}
      */
     @Override
-    public String createYahooRequest(String location) throws UnsupportedEncodingException {
+    public String createYahooRequest(String location)  {
 
         RestTemplate restTemplate = new RestTemplate();
 
@@ -51,7 +51,11 @@ public class YahooServiceImpl implements YahooService {
         parameters.add("oauth_timestamp=" + timestamp);
         parameters.add("oauth_version=1.0");
         // Make sure value is encoded
-        parameters.add("location=" + URLEncoder.encode(location, "UTF-8"));
+        try {
+            parameters.add("location=" + URLEncoder.encode(location, "UTF-8"));
+        } catch (UnsupportedEncodingException e) {
+            throw new RuntimeException("Encoding error", e);
+        }
         parameters.add("format=json");
         Collections.sort(parameters);
 
@@ -60,9 +64,14 @@ public class YahooServiceImpl implements YahooService {
             parametersList.append(((i > 0) ? "&" : "") + parameters.get(i));
         }
 
-        String signatureString = "GET&" +
-                URLEncoder.encode(url, "UTF-8") + "&" +
-                URLEncoder.encode(parametersList.toString(), "UTF-8");
+        String signatureString = null;
+        try {
+            signatureString = "GET&" +
+                    URLEncoder.encode(url, "UTF-8") + "&" +
+                    URLEncoder.encode(parametersList.toString(), "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            throw new RuntimeException("Encoding error", e);
+        }
 
         String signature = null;
         try {
