@@ -43,8 +43,8 @@
         </dependency>
 
         <dependency>
-            <groupId>ru.gubernik.weather.model</groupId>
-            <artifactId>model</artifactId>
+            <groupId>ru.gubernik.weather.dbserviceapi</groupId>
+            <artifactId>db_service_api</artifactId>
             <version>1.0</version>
             <scope>compile</scope>
         </dependency>
@@ -61,25 +61,25 @@
     </dependencies>
 
     <build>
-        <finalName>yahoo-weather</finalName>
-        <plugins>
-            <plugin>
-                <artifactId>maven-assembly-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>single</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <configuration>
-                    <descriptorRefs>
-                        <descriptorRef>jar-with-dependencies</descriptorRef>
-                    </descriptorRefs>
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
+    <finalName>yahoo-weather</finalName>
+    <plugins>
+        <plugin>
+            <artifactId>maven-assembly-plugin</artifactId>
+            <executions>
+                <execution>
+                    <phase>package</phase>
+                    <goals>
+                        <goal>single</goal>
+                    </goals>
+                </execution>
+            </executions>
+            <configuration>
+                <descriptorRefs>
+                    <descriptorRef>jar-with-dependencies</descriptorRef>
+                </descriptorRefs>
+            </configuration>
+        </plugin>
+    </plugins>
+</build>
 
 </project>

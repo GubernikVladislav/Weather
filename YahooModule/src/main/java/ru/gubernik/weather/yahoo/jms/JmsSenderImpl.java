@@ -1,6 +1,6 @@
 package ru.gubernik.weather.yahoo.jms;
 
-import ru.gubernik.weather.model.Weather;
+import ru.gubernik.weather.dbserviceapi.WeatherDto;
 
 import javax.annotation.Resource;
 import javax.enterprise.context.ApplicationScoped;
@@ -40,7 +40,7 @@ public class JmsSenderImpl implements JmsSender {
      * {@inheritDoc}
      */
     @Override
-    public void send(Weather weather) {
+    public void send(WeatherDto weather) {
         if (weather != null) {
             Message message = context.createObjectMessage(weather);
             context.createProducer().send((Destination) queue, message);

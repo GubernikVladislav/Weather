@@ -7,7 +7,7 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import ru.gubernik.weather.model.Weather;
+import ru.gubernik.weather.dbserviceapi.WeatherDto;
 
 import javax.jms.JMSContext;
 import javax.jms.JMSProducer;
@@ -44,7 +44,7 @@ public class JmsSenderTest {
     public void senderTest(){
 
         ObjectMessage message = mock(ObjectMessage.class);
-        Weather weather = mock(Weather.class);
+        WeatherDto weather = mock(WeatherDto.class);
         JMSProducer producer = mock(JMSProducer.class);
 
         when(context.createObjectMessage(weather)).thenReturn(message);

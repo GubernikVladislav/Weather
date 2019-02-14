@@ -1,7 +1,7 @@
 package ru.gubernik.weather.yahoo.service.module;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import ru.gubernik.weather.model.Weather;
+import ru.gubernik.weather.dbserviceapi.WeatherDto;
 import ru.gubernik.weather.yahoo.jms.JmsSender;
 import ru.gubernik.weather.yahoo.service.yahoo.YahooService;
 
@@ -36,7 +36,7 @@ public class ModuleServiceImpl implements ModuleService {
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
-        Weather weather = jsonMap(jsonString);
+        WeatherDto weather = jsonMap(jsonString);
         sendJms(weather);
     }
 
@@ -44,14 +44,14 @@ public class ModuleServiceImpl implements ModuleService {
      * {@inheritDoc}
      */
     @Override
-    public Weather jsonMap(String jsonString) {
+    public WeatherDto jsonMap(String jsonString) {
         ObjectMapper objectMapper = new ObjectMapper();
-        Weather weather;
+        WeatherDto weather;
         try {
-            weather = objectMapper.readValue(jsonString, Weather.class);
+            weather = objectMapper.readValue(jsonString, WeatherDto.class);
             return weather;
         } catch (IOException e) {
-            return new Weather();
+            return new WeatherDto();
         }
     }
 
@@ -59,7 +59,7 @@ public class ModuleServiceImpl implements ModuleService {
      * {@inheritDoc}
      */
     @Override
-    public void sendJms(Weather weather) {
+    public void sendJms(WeatherDto weather) {
         jmsSender.send(weather);
     }
 

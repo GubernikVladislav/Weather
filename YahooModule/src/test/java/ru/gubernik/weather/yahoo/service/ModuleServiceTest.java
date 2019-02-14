@@ -9,7 +9,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Spy;
 import org.mockito.runners.MockitoJUnitRunner;
-import ru.gubernik.weather.model.Weather;
+import ru.gubernik.weather.dbserviceapi.WeatherDto;
 import ru.gubernik.weather.yahoo.jms.JmsSender;
 import ru.gubernik.weather.yahoo.service.module.ModuleServiceImpl;
 import ru.gubernik.weather.yahoo.service.yahoo.YahooService;
@@ -91,7 +91,7 @@ public class ModuleServiceTest {
     @Test
     public void requestTest() throws UnsupportedEncodingException {
         String location = "Moscow";
-        Weather weather = mock(Weather.class);
+        WeatherDto weather = mock(WeatherDto.class);
 
         when(yahooService.createYahooRequest(location)).thenReturn(jsonString);
         when(moduleService.jsonMap(jsonString)).thenReturn(weather);
@@ -104,15 +104,15 @@ public class ModuleServiceTest {
     }
 
     /**
-     * Тестирование маппинга json в класс Weather
+     * Тестирование маппинга json в класс WeatherDto
      */
     @Test
     public void jsonMappingTest() throws IOException {
 
         ObjectMapper mapper = new ObjectMapper();
-        Weather targetWeather = mapper.readValue(jsonString, Weather.class);
+        WeatherDto targetWeather = mapper.readValue(jsonString, WeatherDto.class);
 
-        Weather weather = moduleService.jsonMap(jsonString);
+        WeatherDto weather = moduleService.jsonMap(jsonString);
 
         Assert.assertEquals(weather, targetWeather);
 
@@ -120,12 +120,12 @@ public class ModuleServiceTest {
     }
 
     /**
-     * Тестирование отправки объекта Weather через jmsSender
+     * Тестирование отправки объекта WeatherDto через jmsSender
      */
     @Test
     public void sendJmsTest(){
 
-        Weather weather = new Weather();
+        WeatherDto weather = new WeatherDto();
 
         moduleService.sendJms(weather);
 

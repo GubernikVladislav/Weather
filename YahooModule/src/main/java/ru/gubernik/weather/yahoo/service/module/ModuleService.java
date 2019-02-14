@@ -1,6 +1,6 @@
 package ru.gubernik.weather.yahoo.service.module;
 
-import ru.gubernik.weather.model.Weather;
+import ru.gubernik.weather.dbserviceapi.WeatherDto;
 
 /**
  * Сервис
@@ -16,11 +16,11 @@ public interface ModuleService {
     /**
      * Парсинг json строки в java объект
      */
-    Weather jsonMap(String jsonString);
+    WeatherDto jsonMap(String jsonString);
 
     /**
      * Отправка Jms сообщения
      */
-    void sendJms(Weather weather);
+    void sendJms(WeatherDto weather);
 
 }
