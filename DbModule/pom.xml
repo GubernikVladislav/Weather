@@ -29,8 +29,8 @@
             <artifactId>cdi-api</artifactId>
         </dependency>
         <dependency>
-            <groupId>ru.gubernik.weather.model</groupId>
-            <artifactId>model</artifactId>
+            <groupId>ru.gubernik.weather.dbserviceapi</groupId>
+            <artifactId>db_service_api</artifactId>
             <version>1.0</version>
             <scope>compile</scope>
         </dependency>
@@ -99,6 +99,17 @@
             <groupId>com.caucho</groupId>
             <artifactId>hessian</artifactId>
             <version>4.0.38</version>
+        </dependency>
+
+        <dependency>
+            <groupId>ma.glasnost.orika</groupId>
+            <artifactId>orika-core</artifactId>
+            <version>1.5.2</version>
+        </dependency>
+
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
         </dependency>
 
     </dependencies>

@@ -1,7 +1,7 @@
 package ru.gubernik.weather.dbmodule.jms;
 
 import ru.gubernik.weather.dbmodule.service.WeatherService;
-import ru.gubernik.weather.model.Weather;
+import ru.gubernik.weather.dbserviceapi.WeatherDto;
 
 import javax.annotation.Resource;
 import javax.ejb.ActivationConfigProperty;
@@ -42,9 +42,9 @@ public class JmsReceiver implements MessageListener {
     @Override
     public void onMessage(Message message) {
         try {
-                Weather weather = message.getBody(Weather.class);
-                log.info(weather.toString());
-                weatherService.save(weather);
+            WeatherDto weather = message.getBody(WeatherDto.class);
+            weatherService.save(weather);
+            log.info(weather.toString());
 
         } catch (JMSException e) {
             mdc.setRollbackOnly();

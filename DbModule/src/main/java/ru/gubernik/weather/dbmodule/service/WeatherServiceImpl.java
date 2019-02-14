@@ -2,12 +2,13 @@ package ru.gubernik.weather.dbmodule.service;
 
 import org.springframework.transaction.annotation.Transactional;
 import ru.gubernik.weather.dbmodule.dao.WeatherDao;
-import ru.gubernik.weather.model.Location;
-import ru.gubernik.weather.model.Weather;
+import ru.gubernik.weather.dbmodule.mapper.MapperFacade;
+import ru.gubernik.weather.dbmodule.model.Weather;
+import ru.gubernik.weather.dbserviceapi.LocationDto;
+import ru.gubernik.weather.dbserviceapi.WeatherDto;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -19,8 +20,15 @@ public class WeatherServiceImpl implements WeatherService {
     @Inject
     private WeatherDao weatherDao;
 
+    @Inject
+    private MapperFacade mapperFacade;
+
     public WeatherServiceImpl(){
 
+    }
+
+    public WeatherServiceImpl(WeatherDao weatherDao) {
+        this.weatherDao = weatherDao;
     }
 
     public void weatherDao(WeatherDao weatherDao) {
@@ -32,7 +40,10 @@ public class WeatherServiceImpl implements WeatherService {
      */
     @Override
     @Transactional
-    public void save(Weather weather) {
+    public void save(WeatherDto weatherDto) {
+
+        Weather weather = mapperFacade.map(weatherDto, Weather.class);
+
         weatherDao.save(weather);
     }
 
@@ -40,23 +51,23 @@ public class WeatherServiceImpl implements WeatherService {
      * {@inheritDoc}
      */
     @Override
-    public void update(Weather weather) {
-        weatherDao.update(weather);
+    public void update(WeatherDto weather) {
+
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public Weather get(String location) {
-        return weatherDao.get(location);
+    public WeatherDto get(String location) {
+        return null;
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public List<Location> locationList() {
-        return new ArrayList<Location>();
+    public List<LocationDto> locationList() {
+        return null;
     }
 }
