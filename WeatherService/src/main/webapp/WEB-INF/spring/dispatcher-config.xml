@@ -13,4 +13,9 @@
     <context:component-scan base-package="ru.gubernik.weather.weatherservice"/>
 
     <mvc:annotation-driven />
+
+    <bean id="remoteProxy" class="org.springframework.remoting.caucho.HessianProxyFactoryBean">
+        <property name="serviceUrl" value="http://localhost:8080/db_service/remoting/WeatherService"/>
+        <property name="serviceInterface" value="ru.gubernik.weather.dbserviceapi.service.RemoteProxy"/>
+    </bean>
 </beans>
