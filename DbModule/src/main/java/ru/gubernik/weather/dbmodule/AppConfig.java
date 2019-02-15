@@ -4,6 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
+import org.springframework.orm.jpa.LocalEntityManagerFactoryBean;
 import org.springframework.remoting.caucho.HessianServiceExporter;
 import ru.gubernik.weather.dbserviceapi.service.RemoteProxy;
 
@@ -21,5 +23,4 @@ public class AppConfig {
         hessianServiceExporter.setServiceInterface(RemoteProxy.class);
         return hessianServiceExporter;
     }
-
 }
