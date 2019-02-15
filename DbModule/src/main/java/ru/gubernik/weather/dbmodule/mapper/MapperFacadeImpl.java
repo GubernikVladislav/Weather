@@ -1,5 +1,8 @@
 package ru.gubernik.weather.dbmodule.mapper;
 
+import ma.glasnost.orika.MapperFactory;
+import org.springframework.beans.factory.FactoryBean;
+
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 
@@ -10,7 +13,7 @@ import javax.inject.Inject;
 public class MapperFacadeImpl implements MapperFacade {
 
     @Inject
-    private CustomMapperFactory mapperFactory;
+    private FactoryBean<MapperFactory> mapperFactory;
 
     /**
      * {@inheritDoc}
