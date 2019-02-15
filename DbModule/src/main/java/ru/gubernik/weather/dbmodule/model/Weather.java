@@ -35,7 +35,7 @@ public class Weather implements Serializable {
     private Integer version;
 
     @JsonIgnore
-    @Column(name = "location")
+    @Column(name = "location", length = 50)
     private String cityName;
 
     /**

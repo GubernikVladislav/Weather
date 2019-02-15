@@ -3,6 +3,7 @@ package ru.gubernik.weather.dbmodule.service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.gubernik.weather.dbmodule.dao.WeatherDao;
 import ru.gubernik.weather.dbmodule.mapper.MapperFacade;
+import ru.gubernik.weather.dbmodule.model.Location;
 import ru.gubernik.weather.dbmodule.model.Weather;
 import ru.gubernik.weather.dbserviceapi.model.LocationDto;
 import ru.gubernik.weather.dbserviceapi.model.WeatherDto;
@@ -36,7 +37,11 @@ public class WeatherServiceImpl implements WeatherService {
 
         Weather weather = mapperFacade.map(weatherDto, Weather.class);
 
-        weatherDao.save(weather);
+        if(locationList().contains(weather.getLocation())){
+            update(weatherDto);
+        }else {
+            weatherDao.save(weather);
+        }
     }
 
     /**
@@ -45,6 +50,11 @@ public class WeatherServiceImpl implements WeatherService {
     @Override
     public void update(WeatherDto weather) {
 
+        WeatherDto weatherDto = get(weather.getLocation().getCity());
+        mapperFacade.map(weather, weatherDto);
+        Weather newWeather = mapperFacade.map(weatherDto, Weather.class);
+        newWeather.setCityName(weather.getLocation().getCity());
+        weatherDao.update(newWeather);
     }
 
     /**
@@ -52,14 +62,19 @@ public class WeatherServiceImpl implements WeatherService {
      */
     @Override
     public WeatherDto get(String location) {
-        return null;
+
+        WeatherDto weatherDto;
+        Weather weather = weatherDao.get(location);
+        weatherDto = mapperFacade.map(weather, WeatherDto.class);
+
+        return weatherDto;
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public List<LocationDto> locationList() {
-        return null;
+    public List<Location> locationList() {
+        return weatherDao.getLocationList();
     }
 }

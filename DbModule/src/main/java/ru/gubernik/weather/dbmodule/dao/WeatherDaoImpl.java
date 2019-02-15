@@ -1,5 +1,6 @@
 package ru.gubernik.weather.dbmodule.dao;
 
+import org.springframework.stereotype.Component;
 import ru.gubernik.weather.dbmodule.model.Forecast;
 import ru.gubernik.weather.dbmodule.model.Location;
 import ru.gubernik.weather.dbmodule.model.Weather;
@@ -7,15 +8,20 @@ import ru.gubernik.weather.dbmodule.model.Weather;
 import javax.enterprise.context.ApplicationScoped;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 import java.util.List;
 
 /**
  * {@inheritDoc}
  */
 @ApplicationScoped
+@Component
 public class WeatherDaoImpl implements WeatherDao {
 
-    @PersistenceContext(name = "Postgres")
+    @PersistenceContext(unitName = "Postgres")
     private EntityManager entityManager;
 
     public WeatherDaoImpl(){
@@ -29,6 +35,8 @@ public class WeatherDaoImpl implements WeatherDao {
     public void save(Weather weather) {
 
         weather.getLocation().setWeather(weather);
+
+        weather.setCityName(weather.getLocation().getCity());
 
         weather.getCurrentObservation().setWeather(weather);
         weather.getCurrentObservation().getAstronomy().setObservation(weather.getCurrentObservation());
@@ -56,7 +64,16 @@ public class WeatherDaoImpl implements WeatherDao {
      */
     @Override
     public Weather get(String location) {
-        return null;
+
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Weather> criteriaQuery = criteriaBuilder.createQuery(Weather.class);
+        Root root = criteriaQuery.from(Weather.class);
+
+        criteriaQuery.where(criteriaBuilder.equal(root.get("cityName"), location));
+
+        TypedQuery query = entityManager.createQuery(criteriaQuery);
+        Weather weather = (Weather) query.getSingleResult();
+        return weather;
     }
 
     /**
@@ -64,6 +81,14 @@ public class WeatherDaoImpl implements WeatherDao {
      */
     @Override
     public List<Location> getLocationList() {
-        return null;
+
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Location> criteriaQuery = criteriaBuilder.createQuery(Location.class);
+        Root root = criteriaQuery.from(Location.class);
+
+        TypedQuery<Location> query = entityManager.createQuery(criteriaQuery);
+        List<Location> locations = query.getResultList();
+
+        return locations;
     }
 }

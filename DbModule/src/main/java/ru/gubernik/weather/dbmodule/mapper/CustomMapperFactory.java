@@ -3,6 +3,7 @@ package ru.gubernik.weather.dbmodule.mapper;
 import ma.glasnost.orika.MapperFactory;
 import ma.glasnost.orika.impl.DefaultMapperFactory;
 import org.springframework.beans.factory.FactoryBean;
+import org.springframework.stereotype.Component;
 
 import javax.enterprise.context.ApplicationScoped;
 
@@ -10,6 +11,7 @@ import javax.enterprise.context.ApplicationScoped;
  * Кастомный mapperFactory
  */
 @ApplicationScoped
+@Component
 public class CustomMapperFactory implements FactoryBean<MapperFactory> {
     @Override
     public MapperFactory getObject() throws Exception {
