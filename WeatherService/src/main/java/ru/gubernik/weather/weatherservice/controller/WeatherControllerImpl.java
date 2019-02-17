@@ -32,14 +32,8 @@ public class WeatherControllerImpl implements WeatherController {
      * {@inheritDoc}
      */
     @RequestMapping(value = "/{location}", method = {GET})
-    public WeatherDto getWeather(@PathVariable("location") String location) throws Exception {
-        if(!location.matches("^[a-zA-Z]+[\\-]?[a-zA-Z]+[\\-]?[a-zA-Z]+$")){
-            throw new Exception("incorrect city name");
-        }else if(getLocationList().contains(new LocationView(location))){
-            return weatherService.getWeather(location);
-        }else {
-            throw new Exception("no information, see /locations");
-        }
+    public WeatherDto getWeather(@PathVariable("location") String location) {
+        return weatherService.getWeather(location);
     }
 
     /**
@@ -50,8 +44,4 @@ public class WeatherControllerImpl implements WeatherController {
         return  weatherService.getLocations();
     }
 
-    @ExceptionHandler(Exception.class)
-    private String checkExc(Exception e){
-        return "{\"error\":\"" + e.getMessage() + "\"}";
-    }
 }
