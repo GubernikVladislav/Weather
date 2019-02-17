@@ -57,6 +57,7 @@ public class YahooServiceImpl implements YahooService {
             throw new RuntimeException("Encoding error", e);
         }
         parameters.add("format=json");
+        parameters.add("u=c");
         Collections.sort(parameters);
 
         StringBuffer parametersList = new StringBuffer();
@@ -101,7 +102,7 @@ public class YahooServiceImpl implements YahooService {
         HttpEntity<?> entity = new HttpEntity<>(headers);
 
         ResponseEntity<String> responseEntity =
-                restTemplate.exchange(url + "?location=" + location + "&format=json",
+                restTemplate.exchange(url + "?location=" + location +"&u=c&format=json",
                         HttpMethod.GET,
                         entity,
                         String.class);
