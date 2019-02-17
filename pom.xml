@@ -152,6 +152,7 @@
                     <configuration>
                         <source>${java}</source>
                         <target>${java}</target>
+                        <encoding>UTF-8</encoding>
                     </configuration>
                 </plugin>
 
@@ -163,4 +164,5 @@
             </plugins>
         </pluginManagement>
     </build>
+
 </project>

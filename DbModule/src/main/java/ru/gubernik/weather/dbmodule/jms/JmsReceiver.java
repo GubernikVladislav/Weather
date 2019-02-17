@@ -26,9 +26,6 @@ import javax.jms.MessageListener;
 })
 public class JmsReceiver implements MessageListener {
 
-    @Resource
-    private MessageDrivenContext mdc;
-
     @Inject
     private WeatherService weatherService;
 
@@ -39,8 +36,10 @@ public class JmsReceiver implements MessageListener {
     @Override
     public void onMessage(Message message) {
         try {
-            WeatherDto weather = message.getBody(WeatherDto.class);
-            weatherService.save(weather);
+            if(message.isBodyAssignableTo(WeatherDto.class)) {
+                WeatherDto weather = message.getBody(WeatherDto.class);
+                weatherService.save(weather);
+            }
         } catch (JMSException e) {
             throw new RuntimeException("Jms message error", e);
         }

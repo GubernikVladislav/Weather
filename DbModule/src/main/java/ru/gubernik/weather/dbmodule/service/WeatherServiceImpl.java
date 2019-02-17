@@ -36,8 +36,10 @@ public class WeatherServiceImpl implements WeatherService {
     public void save(WeatherDto weatherDto) {
 
         Weather weather = mapperFacade.map(weatherDto, Weather.class);
+        Location location = weather.getLocation();
+        List<Location> locations = locationList();
 
-        if(locationList().contains(weather.getLocation())){
+        if(locations.contains(location)){
             update(weatherDto);
         }else {
             weatherDao.save(weather);
@@ -48,26 +50,11 @@ public class WeatherServiceImpl implements WeatherService {
      * {@inheritDoc}
      */
     @Override
-    public void update(WeatherDto weather) {
+    public void update(WeatherDto weatherDto) {
 
-        WeatherDto weatherDto = get(weather.getLocation().getCity());
-        mapperFacade.map(weather, weatherDto);
-        Weather newWeather = mapperFacade.map(weatherDto, Weather.class);
-        newWeather.setCityName(weather.getLocation().getCity());
-        weatherDao.update(newWeather);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public WeatherDto get(String location) {
-
-        WeatherDto weatherDto;
-        Weather weather = weatherDao.get(location);
-        weatherDto = mapperFacade.map(weather, WeatherDto.class);
-
-        return weatherDto;
+        Weather weather = weatherDao.get(weatherDto.getLocation().getCity());
+        mapperFacade.map(weatherDto, weather);
+        weatherDao.update(weather);
     }
 
     /**

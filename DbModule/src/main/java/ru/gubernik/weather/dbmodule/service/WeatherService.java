@@ -24,13 +24,6 @@ public interface WeatherService {
     void update(WeatherDto weather);
 
     /**
-     * Получение информации о погоде
-     * @param location - название города
-     * @return WeatherDto - объект с информацией
-     */
-    WeatherDto get(String location);
-
-    /**
      * Получение списка городов, имеющих информацию о погоде
      * @return
      */

@@ -1,10 +1,10 @@
 package ru.gubernik.weather.dbmodule.dao;
 
-import org.springframework.stereotype.Component;
 import ru.gubernik.weather.dbmodule.model.Forecast;
 import ru.gubernik.weather.dbmodule.model.Location;
 import ru.gubernik.weather.dbmodule.model.Weather;
 
+import javax.annotation.Resource;
 import javax.enterprise.context.ApplicationScoped;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -18,10 +18,9 @@ import java.util.List;
  * {@inheritDoc}
  */
 @ApplicationScoped
-@Component
 public class WeatherDaoImpl implements WeatherDao {
 
-    @PersistenceContext(unitName = "Postgres")
+    @PersistenceContext
     private EntityManager entityManager;
 
     public WeatherDaoImpl(){
@@ -56,7 +55,7 @@ public class WeatherDaoImpl implements WeatherDao {
      */
     @Override
     public void update(Weather weather) {
-
+        entityManager.merge(weather);
     }
 
     /**

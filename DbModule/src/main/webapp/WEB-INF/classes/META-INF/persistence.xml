@@ -9,8 +9,10 @@
         <exclude-unlisted-classes>false</exclude-unlisted-classes>
         <properties>
             <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQL95Dialect"/>
-            <property name="hibernate.hbm2ddl.auto" value="update" />
+            <property name="hibernate.hbm2ddl.auto" value="create-drop" />
             <property name="hibernate.format_sql" value="true" />
+            <property name="jboss.entity.manager.jndi.name" value="java:/myEntityManager"/>
+            <property name="jboss.entity.manager.factory.jndi.name" value="java:/yourEntityManagerFactoryName"/>
         </properties>
 
     </persistence-unit>
