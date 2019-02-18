@@ -24,7 +24,7 @@ public interface WeatherService {
     List<LocationView> list();
 
     /**
-     * Преобразование строки к нужному виду
+     * Преобразование строки к нужному виду. Первая буква заглавная, остальные строчный
      */
-    String editString(String s);
+    String replaceCase(String s);
 }

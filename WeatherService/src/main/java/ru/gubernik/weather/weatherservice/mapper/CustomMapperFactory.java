@@ -5,15 +5,14 @@ import ma.glasnost.orika.impl.DefaultMapperFactory;
 import org.springframework.beans.factory.FactoryBean;
 import org.springframework.stereotype.Component;
 
-import javax.enterprise.context.ApplicationScoped;
-
 /**
  * Кастомный mapperFactory
  */
 @Component
 public class CustomMapperFactory implements FactoryBean<MapperFactory> {
+
     @Override
-    public MapperFactory getObject() throws Exception {
+    public MapperFactory getObject(){
         return new DefaultMapperFactory.Builder()
                 .mapNulls(false)
                 .constructorResolverStrategy(null)

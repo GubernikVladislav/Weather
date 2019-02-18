@@ -31,6 +31,21 @@ public class MapperFacadeImpl implements MapperFacade {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public <O, T> void map(O object, T target) {
+        try {
+            mapperFactory.getMapperFacade().map(object, target);
+        } catch (Exception e) {
+            throw new RuntimeException("Mapper error", e);
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public <L, T> List<T> mapAsList(Iterable<L> list, Class<T> target) {
         try {

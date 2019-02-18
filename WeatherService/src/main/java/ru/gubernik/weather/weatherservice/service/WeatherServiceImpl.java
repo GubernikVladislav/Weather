@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.gubernik.weather.dbserviceapi.model.LocationDto;
 import ru.gubernik.weather.dbserviceapi.model.WeatherDto;
-import ru.gubernik.weather.dbserviceapi.service.RemoteProxy;
+import ru.gubernik.weather.dbserviceapi.service.GetWeatherService;
 import ru.gubernik.weather.weatherservice.view.LocationView;
 
 import java.util.ArrayList;
@@ -17,12 +17,12 @@ import java.util.List;
 @Service
 public class WeatherServiceImpl implements WeatherService{
 
-    private final RemoteProxy remoteProxy;
+    private final GetWeatherService getWeatherService;
     private final MapperFactory mapperFactory;
 
     @Autowired
-    public WeatherServiceImpl(RemoteProxy remoteProxy, MapperFactory mapperFactory) {
-        this.remoteProxy = remoteProxy;
+    public WeatherServiceImpl(GetWeatherService getWeatherService, MapperFactory mapperFactory) {
+        this.getWeatherService = getWeatherService;
         this.mapperFactory = mapperFactory;
     }
 
@@ -32,10 +32,10 @@ public class WeatherServiceImpl implements WeatherService{
     @Override
     public WeatherDto getWeather(String location) {
 
-        if(location.isEmpty()){
+        if(location == null || location.isEmpty()){
             return new WeatherDto();
         }
-        return remoteProxy.getWeather(editString(location));
+        return getWeatherService.getWeather(replaceCase(location));
     }
 
     /**
@@ -44,7 +44,7 @@ public class WeatherServiceImpl implements WeatherService{
     @Override
     public List<LocationView> list() {
 
-        List<LocationDto> dtoList = remoteProxy.list();
+        List<LocationDto> dtoList = getWeatherService.list();
         List<LocationView> views = new ArrayList<>();
 
         for (LocationDto dto : dtoList){
@@ -58,9 +58,9 @@ public class WeatherServiceImpl implements WeatherService{
      * {@inheritDoc}
      */
     @Override
-    public String editString(String s) {
+    public String replaceCase(String s) {
 
-        if (s.isEmpty()){
+        if (s == null || s.isEmpty()){
             return "";
         }
         return s.substring(0,1).toUpperCase() + s.substring(1).toLowerCase();

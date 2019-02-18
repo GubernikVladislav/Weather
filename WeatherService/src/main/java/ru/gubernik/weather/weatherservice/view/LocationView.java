@@ -2,6 +2,9 @@ package ru.gubernik.weather.weatherservice.view;
 
 import java.util.Objects;
 
+/**
+ * Представление названия города
+ */
 public class LocationView {
 
     private String city;

@@ -6,7 +6,7 @@ import ru.gubernik.weather.weatherservice.view.LocationView;
 import java.util.List;
 
 /**
- * нтерфейс контроллера получения погоды
+ * Интерфейс контроллера получения погоды
  */
 public interface WeatherController {
 

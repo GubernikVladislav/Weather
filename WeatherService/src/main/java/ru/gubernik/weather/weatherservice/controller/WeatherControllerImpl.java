@@ -9,6 +9,8 @@ import ru.gubernik.weather.weatherservice.service.WeatherService;
 import ru.gubernik.weather.weatherservice.view.LocationView;
 
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
@@ -21,6 +23,7 @@ import static org.springframework.web.bind.annotation.RequestMethod.GET;
 public class WeatherControllerImpl implements WeatherController {
 
     private final WeatherService weatherService;
+    private Pattern pattern = Pattern.compile("^[a-zA-Z]+[\\-]?[a-zA-Z]+[\\-]?[a-zA-Z]+$");
 
     @Autowired
     public WeatherControllerImpl(WeatherService weatherService) {
@@ -33,10 +36,11 @@ public class WeatherControllerImpl implements WeatherController {
     @RequestMapping(value = "/{location}", method = {GET})
     public WeatherDto getWeather(@PathVariable("location") String location){
 
-        String editLocation = weatherService.editString(location);
+        String editLocation = weatherService.replaceCase(location);
         LocationView view = new LocationView(editLocation);
+        Matcher matcher = pattern.matcher(location);
 
-        if(!location.matches("^[a-zA-Z]+[\\-]?[a-zA-Z]+[\\-]?[a-zA-Z]+$")){
+        if(!matcher.matches()){
             throw new RuntimeException("incorrect city name");
         }else if(!list().contains(view)){
             throw new RuntimeException("no information");

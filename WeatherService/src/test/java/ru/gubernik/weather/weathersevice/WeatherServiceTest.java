@@ -7,29 +7,62 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import ru.gubernik.weather.dbserviceapi.model.WeatherDto;
-import ru.gubernik.weather.dbserviceapi.service.RemoteProxy;
+import ru.gubernik.weather.dbserviceapi.service.GetWeatherService;
 import ru.gubernik.weather.weatherservice.service.WeatherServiceImpl;
 
-import static org.mockito.Mockito.*;
+import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyZeroInteractions;
+import static org.mockito.Mockito.when;
 
+/**
+ * Тестирование сервиса получения данных о погоде
+ */
 @RunWith(MockitoJUnitRunner.class)
 public class WeatherServiceTest {
 
     @Mock
-    private RemoteProxy remoteProxy;
+    private GetWeatherService getWeatherService;
 
     @InjectMocks
     private WeatherServiceImpl weatherService;
+
+    /**
+     * Тестирование получения погоды по называнию города
+     */
     @Test
     public void getMethodTest(){
 
         String location = "Moscow";
 
-        when(remoteProxy.getWeather(location)).thenReturn(new WeatherDto());
+        when(getWeatherService.getWeather(location)).thenReturn(new WeatherDto());
 
         weatherService.getWeather(location);
 
-        verify(remoteProxy, times(1)).getWeather(location);
+        verify(getWeatherService, times(1)).getWeather(location);
         Assert.assertNotNull(weatherService.getWeather(location));
+    }
+
+    /**
+     * Тестирование при null параметре
+     */
+    @Test
+    public void nullGetTest(){
+        String nullLocation = null;
+
+        assertEquals(weatherService.getWeather(nullLocation), new WeatherDto());
+        verifyZeroInteractions(getWeatherService);
+    }
+
+    /**
+     * Тестирование при пустом параметре
+     */
+    @Test
+    public void emptyTest(){
+        String emptyLocation = "";
+
+        assertEquals(weatherService.getWeather(emptyLocation), new WeatherDto());
+        verifyZeroInteractions(getWeatherService);
     }
 }
