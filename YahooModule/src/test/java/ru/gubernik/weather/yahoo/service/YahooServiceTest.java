@@ -52,4 +52,15 @@ public class YahooServiceTest {
         assertEquals(response, location);
     }
 
+    /**
+     * Тестирование при null параметре
+     */
+    @Test
+    public void ignoreNullString(){
+        String location = null;
+
+        String response = yahooService.createYahooRequest(location);
+
+        assertEquals(response, "");
+    }
 }

@@ -30,7 +30,7 @@ public class ModuleServiceImpl implements ModuleService {
     @Override
     public void request(String location) {
 
-        if (location.isEmpty()){
+        if (location == null || location.isEmpty()){
             return;
         }
 
@@ -45,7 +45,7 @@ public class ModuleServiceImpl implements ModuleService {
     @Override
     public WeatherDto jsonMap(String jsonString) {
 
-        if(jsonString.isEmpty()){
+        if(jsonString == null || jsonString.isEmpty()){
             return new WeatherDto();
         }
 
@@ -68,5 +68,4 @@ public class ModuleServiceImpl implements ModuleService {
             jmsSender.send(weather);
         }
     }
-
 }

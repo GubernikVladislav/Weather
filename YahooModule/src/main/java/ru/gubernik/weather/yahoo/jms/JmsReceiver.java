@@ -29,10 +29,17 @@ public class JmsReceiver implements MessageListener {
 
     @Override
     public void onMessage(Message message) {
+
+        if(message == null){
+            return;
+        }
+
         try {
             if(message.isBodyAssignableTo(String.class)) {
                 String location = message.getBody(String.class);
                 moduleService.request(location);
+            }else {
+                throw new RuntimeException("Incorrect message body type");
             }
         } catch (JMSException e) {
             throw new RuntimeException("Jms message error", e);

@@ -14,7 +14,12 @@ import javax.jms.JMSProducer;
 import javax.jms.ObjectMessage;
 import javax.jms.Queue;
 
-import static org.mockito.Mockito.*;
+import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.atLeast;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyZeroInteractions;
+import static org.mockito.Mockito.when;
 
 /**
  * Тестирование отправки jms сообщений
@@ -67,8 +72,11 @@ public class JmsSenderTest {
     public void noSendTest(){
         WeatherDto weatherDto = null;
 
-        sender.send(weatherDto);
-
+        try {
+            sender.send(weatherDto);
+        }catch (RuntimeException e){
+            assertEquals(e.getMessage(), "Send message error: weather cannot be null");
+        }
         verifyZeroInteractions(context);
     }
 }

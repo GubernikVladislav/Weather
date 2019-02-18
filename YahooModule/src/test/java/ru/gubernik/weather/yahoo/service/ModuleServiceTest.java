@@ -16,7 +16,13 @@ import ru.gubernik.weather.yahoo.service.yahoo.YahooService;
 
 import java.io.IOException;
 
-import static org.mockito.Mockito.*;
+import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.atLeast;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyZeroInteractions;
+import static org.mockito.Mockito.when;
 
 /**
  * Тестирование сервиса модуля Yahoo
@@ -103,6 +109,30 @@ public class ModuleServiceTest {
     }
 
     /**
+     * Проверка запроса при null параметре
+     */
+    @Test
+    public void nullRequestTest(){
+        String nullLocation = null;
+
+        moduleService.request(nullLocation);
+
+        verifyZeroInteractions(yahooService);
+    }
+
+    /**
+     * Проверка запроса при пустом параметре
+     */
+    @Test
+    public void emptyRequestTest(){
+        String emptyLocation = "";
+
+        moduleService.request(emptyLocation);
+
+        verifyZeroInteractions(yahooService);
+    }
+
+    /**
      * Тестирование маппинга json в класс WeatherDto
      */
     @Test
@@ -113,8 +143,30 @@ public class ModuleServiceTest {
 
         WeatherDto weather = moduleService.jsonMap(jsonString);
 
-        Assert.assertEquals(weather, targetWeather);
+        assertEquals(weather, targetWeather);
 
+    }
+
+    /**
+     * Проверка маппинга при null параметре
+     */
+    @Test
+    public void nullMappingTest(){
+        String nullString = null;
+        WeatherDto weatherDto = moduleService.jsonMap(nullString);
+
+        assertEquals(weatherDto, new WeatherDto());
+    }
+
+    /**
+     * Проверка маппинга при пустом параметре
+     */
+    @Test
+    public void emptyMappingTest(){
+        String emptyString = "";
+        WeatherDto weatherDto = moduleService.jsonMap(emptyString);
+
+        assertEquals(weatherDto, new WeatherDto());
     }
 
     /**
@@ -128,5 +180,17 @@ public class ModuleServiceTest {
         moduleService.sendJms(weather);
 
         verify(jmsSender, times(1)).send(weather);
+    }
+
+    /**
+     * Проверка игнорирования null параметра
+     */
+    @Test
+    public void nullSendTest(){
+        WeatherDto weatherDto = null;
+
+        moduleService.sendJms(weatherDto);
+
+        verifyZeroInteractions(jmsSender);
     }
 }

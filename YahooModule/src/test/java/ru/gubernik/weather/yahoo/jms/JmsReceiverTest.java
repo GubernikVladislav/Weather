@@ -12,7 +12,12 @@ import ru.gubernik.weather.yahoo.service.module.ModuleService;
 import javax.jms.JMSException;
 import javax.jms.Message;
 
-import static org.mockito.Mockito.*;
+import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.atLeast;
+import static org.mockito.Mockito.verifyZeroInteractions;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 /**
  * Тестирование слушателя сообщений модуля Yahoo
@@ -52,13 +57,27 @@ public class JmsReceiverTest {
 
     /**
      * Проверка при неправильном сообщении
-     * @throws JMSException
+     * @throws JMSException исключение метода message.isBodyAssignableTo()
      */
     @Test
-    public void noReceiveTest() throws JMSException {
+    public void incorrectMessageTest() throws JMSException {
         Message message = mock(Message.class);
 
         when(message.isBodyAssignableTo(String.class)).thenReturn(false);
+
+        try {
+            receiver.onMessage(message);
+        }catch (RuntimeException e){
+            assertEquals(e.getMessage(), "Incorrect message body type");
+        }
+    }
+
+    /**
+     * Проверка при message == null. Сообщение не должно быть отправлено
+     */
+    @Test
+    public void nullMessageTest(){
+        Message message = null;
 
         receiver.onMessage(message);
 

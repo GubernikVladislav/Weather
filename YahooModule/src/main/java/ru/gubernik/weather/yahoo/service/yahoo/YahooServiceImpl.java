@@ -31,7 +31,7 @@ public class YahooServiceImpl implements YahooService {
     @Override
     public String createYahooRequest(String location)  {
 
-        if (location.isEmpty()){
+        if (location == null || location.isEmpty()){
             return "";
         }
 
@@ -48,26 +48,31 @@ public class YahooServiceImpl implements YahooService {
         rand.nextBytes(nonce);
         String oauthNonce = new String(nonce).replaceAll("\\W", "");
 
-        List<String> parameters = new ArrayList<>();
-        parameters.add("oauth_consumer_key=" + consumerKey);
-        parameters.add("oauth_nonce=" + oauthNonce);
-        parameters.add("oauth_signature_method=HMAC-SHA1");
-        parameters.add("oauth_timestamp=" + timestamp);
-        parameters.add("oauth_version=1.0");
-        // Make sure value is encoded
-        try {
-            parameters.add("location=" + URLEncoder.encode(location, "UTF-8"));
-        } catch (UnsupportedEncodingException e) {
-            throw new RuntimeException("Encoding error", e);
-        }
-        parameters.add("format=json");
-        parameters.add("u=c");
-        Collections.sort(parameters);
+        List<String> parameters = createParameters(consumerKey, timestamp, oauthNonce, location);
+        StringBuilder parametersList = appendSeparators(parameters);
+        String signature = createSignature(consumerSecret, parametersList, url);
+        String authorizationLine = createAuthorizationLine(consumerKey, timestamp, oauthNonce, signature);
 
-        StringBuilder parametersList = new StringBuilder();
-        for (int i = 0; i < parameters.size(); i++) {
-            parametersList.append((i > 0) ? "&" : "").append(parameters.get(i));
-        }
+        HttpEntity<?> entity = createHeaders(appId, authorizationLine);
+
+        ResponseEntity<String> responseEntity =
+                restTemplate.exchange(url + "?location=" + location +"&u=c&format=json",
+                        HttpMethod.GET,
+                        entity,
+                        String.class);
+
+        return responseEntity.getBody();
+    }
+
+    private HttpEntity<?> createHeaders(String appId, String authorizationLine) {
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Authorization", authorizationLine);
+        headers.set("Yahoo-App-Id", appId);
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        return new HttpEntity<>(headers);
+    }
+
+    private String createSignature(String consumerSecret, StringBuilder parametersList, String url) {
 
         String signatureString;
         try {
@@ -78,7 +83,7 @@ public class YahooServiceImpl implements YahooService {
             throw new RuntimeException("Encoding error", e);
         }
 
-        String signature = null;
+        String signature;
         try {
             SecretKeySpec signingKey = new SecretKeySpec((consumerSecret + "&").getBytes(), "HmacSHA1");
             Mac mac = Mac.getInstance("HmacSHA1");
@@ -87,29 +92,46 @@ public class YahooServiceImpl implements YahooService {
             Encoder encoder = Base64.getEncoder();
             signature = encoder.encodeToString(rawHMAC);
         } catch (Exception e) {
-            System.err.println("Unable to append signature");
-            System.exit(0);
+            throw new RuntimeException("Encoding error", e);
         }
-
-        String authorizationLine = "OAuth " +
-                "oauth_consumer_key=\"" + consumerKey + "\", " +
-                "oauth_nonce=\"" + oauthNonce + "\", " +
-                "oauth_timestamp=\"" + timestamp + "\", " +
-                "oauth_signature_method=\"HMAC-SHA1\", " +
-                "oauth_signature=\"" + signature + "\", " +
-                "oauth_version=\"1.0\"";
-
-        HttpHeaders headers = new HttpHeaders();
-        headers.set("Authorization", authorizationLine);
-        headers.set("Yahoo-App-Id", appId);
-        headers.setContentType(MediaType.APPLICATION_JSON);
-        HttpEntity<?> entity = new HttpEntity<>(headers);
-
-        ResponseEntity<String> responseEntity =
-                restTemplate.exchange(url + "?location=" + location +"&u=c&format=json",
-                        HttpMethod.GET,
-                        entity,
-                        String.class);
-        return responseEntity.getBody();
+        return signature;
     }
+
+    private String createAuthorizationLine(String consumerKey, long timestamp, String oauthNonce, String signature) {
+        return "OAuth " +
+                    "oauth_consumer_key=\"" + consumerKey + "\", " +
+                    "oauth_nonce=\"" + oauthNonce + "\", " +
+                    "oauth_timestamp=\"" + timestamp + "\", " +
+                    "oauth_signature_method=\"HMAC-SHA1\", " +
+                    "oauth_signature=\"" + signature + "\", " +
+                    "oauth_version=\"1.0\"";
+    }
+
+    private StringBuilder appendSeparators(List<String> parameters) {
+        StringBuilder parametersList = new StringBuilder();
+        for (int i = 0; i < parameters.size(); i++) {
+            parametersList.append((i > 0) ? "&" : "").append(parameters.get(i));
+        }
+        return parametersList;
+    }
+
+    private List<String> createParameters(String consumerKey, long timestamp, String oauthNonce, String location) {
+
+        List<String> parameters = new ArrayList<>();
+        parameters.add("oauth_consumer_key=" + consumerKey);
+        parameters.add("oauth_nonce=" + oauthNonce);
+        parameters.add("oauth_signature_method=HMAC-SHA1");
+        parameters.add("oauth_timestamp=" + timestamp);
+        parameters.add("oauth_version=1.0");
+        try {
+            parameters.add("location=" + URLEncoder.encode(location, "UTF-8"));
+        } catch (UnsupportedEncodingException e) {
+            throw new RuntimeException("Encoding error", e);
+        }
+        parameters.add("format=json");
+        parameters.add("u=c");
+        Collections.sort(parameters);
+        return parameters;
+    }
+
 }

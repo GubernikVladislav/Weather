@@ -18,31 +18,20 @@ public class JmsSenderImpl implements JmsSender {
     @Resource(mappedName = "java:jboss/exported/jms/queue/weather")
     private Queue queue;
 
-    private final JMSContext context;
-
     @Inject
-    public JmsSenderImpl(JMSContext context) {
-        this.context = context;
-    }
-
-    /**
-     * Конструктор для тестов
-     * @param context - Jms контекст
-     * @param queue - Jms очередь
-     */
-    protected  JmsSenderImpl(JMSContext context, Queue queue){
-        this.context = context;
-        this.queue = queue;
-    }
+    private JMSContext context;
 
     /**
      * {@inheritDoc}
      */
     @Override
     public void send(WeatherDto weather) {
+
         if (weather != null) {
             Message message = context.createObjectMessage(weather);
             context.createProducer().send(queue, message);
+        }else {
+            throw new RuntimeException("Send message error: weather cannot be null");
         }
     }
 }
