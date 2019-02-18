@@ -33,6 +33,10 @@ public class ForecastDto implements Serializable {
      */
     private String text;
 
+    /**
+     * Код
+     */
+    private Integer code;
 
     public ForecastDto() {
     }
@@ -77,6 +81,14 @@ public class ForecastDto implements Serializable {
         this.text = text;
     }
 
+    public Integer getCode() {
+        return code;
+    }
+
+    public void setCode(Integer code) {
+        this.code = code;
+    }
+
     @Override
     public String toString() {
         return "ForecastDto{" +
@@ -85,6 +97,7 @@ public class ForecastDto implements Serializable {
                 ", low=" + low +
                 ", high=" + high +
                 ", text='" + text + '\'' +
+                ", code=" + code +
                 '}';
     }
 
@@ -92,16 +105,17 @@ public class ForecastDto implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        ForecastDto that = (ForecastDto) o;
-        return Objects.equals(day, that.day) &&
-                Objects.equals(date, that.date) &&
-                Objects.equals(low, that.low) &&
-                Objects.equals(high, that.high) &&
-                Objects.equals(text, that.text);
+        ForecastDto forecast = (ForecastDto) o;
+        return Objects.equals(day, forecast.day) &&
+                Objects.equals(date, forecast.date) &&
+                Objects.equals(low, forecast.low) &&
+                Objects.equals(high, forecast.high) &&
+                Objects.equals(text, forecast.text) &&
+                Objects.equals(code, forecast.code);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(day, date, low, high, text);
+        return Objects.hash(day, date, low, high, text, code);
     }
 }

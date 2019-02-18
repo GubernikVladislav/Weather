@@ -14,6 +14,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Version;
+import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
 
@@ -22,7 +23,7 @@ import java.util.Objects;
  */
 @Entity
 @Table(name = "WEATHER")
-public class Weather {
+public class Weather implements Serializable {
 
     @JsonIgnore
     @Id
@@ -53,7 +54,7 @@ public class Weather {
     /**
      * Прогноз на неделю
      */
-    @OneToMany(mappedBy = "weather", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "weather", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Forecast> forecasts;
 
     public Weather() {

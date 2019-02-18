@@ -1,5 +1,4 @@
 package ru.gubernik.weather.dbmodule.model;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.CascadeType;
@@ -12,6 +11,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Version;
+import java.io.Serializable;
 import java.util.Objects;
 
 /**
@@ -19,7 +19,7 @@ import java.util.Objects;
  */
 @Entity
 @Table(name = "condition")
-public class Condition {
+public class Condition implements Serializable {
 
     @JsonIgnore
     @Id
@@ -35,6 +35,12 @@ public class Condition {
      */
     @Column(name = "text", length = 50)
     private String text;
+
+    /**
+     * Код
+     */
+    @Column(name = "code")
+    private Integer code;
 
     /**
      * Температура
@@ -78,6 +84,14 @@ public class Condition {
         this.text = text;
     }
 
+    public Integer getCode() {
+        return code;
+    }
+
+    public void setCode(Integer code) {
+        this.code = code;
+    }
+
     public Integer getTemperature() {
         return temperature;
     }
@@ -88,12 +102,10 @@ public class Condition {
 
     @Override
     public String toString() {
-        return "Condition{" +
-                "id=" + id +
-                ", version=" + version +
-                ", text='" + text + '\'' +
+        return "ConditionDto{" +
+                "text='" + text + '\'' +
+                ", code=" + code +
                 ", temperature=" + temperature +
-                ", observation=" + observation +
                 '}';
     }
 
@@ -105,12 +117,13 @@ public class Condition {
         return Objects.equals(id, condition.id) &&
                 Objects.equals(version, condition.version) &&
                 Objects.equals(text, condition.text) &&
+                Objects.equals(code, condition.code) &&
                 Objects.equals(temperature, condition.temperature) &&
                 Objects.equals(observation, condition.observation);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, version, text, temperature, observation);
+        return Objects.hash(id, version, text, code, temperature, observation);
     }
 }

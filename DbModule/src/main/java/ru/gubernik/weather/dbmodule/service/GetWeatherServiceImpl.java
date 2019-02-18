@@ -42,7 +42,7 @@ public class GetWeatherServiceImpl implements GetWeatherService {
         try {
             return mapperFactory.getMapperFacade().map(weather, WeatherDto.class);
         } catch (Exception e) {
-            throw new RuntimeException("Mapper Error");
+            throw new RuntimeException("Mapper Error", e);
         }
     }
 

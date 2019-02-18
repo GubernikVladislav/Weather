@@ -12,6 +12,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Version;
+import java.io.Serializable;
 import java.util.Objects;
 
 /**
@@ -19,7 +20,7 @@ import java.util.Objects;
  */
 @Entity
 @Table(name = "current_observation")
-public class Observation {
+public class Observation implements Serializable {
 
     @JsonIgnore
     @Id

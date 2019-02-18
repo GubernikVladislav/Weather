@@ -14,6 +14,11 @@ public class ConditionDto implements Serializable {
     private String text;
 
     /**
+     * Код
+     */
+    private Integer code;
+
+    /**
      * Температура
      */
     private Integer temperature;
@@ -29,6 +34,14 @@ public class ConditionDto implements Serializable {
         this.text = text;
     }
 
+    public Integer getCode() {
+        return code;
+    }
+
+    public void setCode(Integer code) {
+        this.code = code;
+    }
+
     public Integer getTemperature() {
         return temperature;
     }
@@ -39,8 +52,9 @@ public class ConditionDto implements Serializable {
 
     @Override
     public String toString() {
-        return "ConditionDto{" +
+        return "Condition{" +
                 "text='" + text + '\'' +
+                ", code=" + code +
                 ", temperature=" + temperature +
                 '}';
     }
@@ -49,13 +63,14 @@ public class ConditionDto implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        ConditionDto that = (ConditionDto) o;
-        return Objects.equals(text, that.text) &&
-                Objects.equals(temperature, that.temperature);
+        ConditionDto condition = (ConditionDto) o;
+        return Objects.equals(text, condition.text) &&
+                Objects.equals(code, condition.code) &&
+                Objects.equals(temperature, condition.temperature);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(text, temperature);
+        return Objects.hash(text, code, temperature);
     }
 }
