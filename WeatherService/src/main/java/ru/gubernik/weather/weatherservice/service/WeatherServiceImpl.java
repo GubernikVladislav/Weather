@@ -16,11 +16,15 @@ import java.util.List;
 @Service
 public class WeatherServiceImpl implements WeatherService{
 
-    @Autowired
-    private RemoteProxy remoteProxy;
+    private final RemoteProxy remoteProxy;
+
+    private final MapperFactory mapperFactory;
 
     @Autowired
-    private MapperFactory mapperFactory;
+    public WeatherServiceImpl(RemoteProxy remoteProxy, MapperFactory mapperFactory) {
+        this.remoteProxy = remoteProxy;
+        this.mapperFactory = mapperFactory;
+    }
 
     /**
      * {@inheritDoc}

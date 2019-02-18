@@ -47,7 +47,7 @@ public class ModuleServiceImpl implements ModuleService {
             weather = objectMapper.readValue(jsonString, WeatherDto.class);
             return weather;
         } catch (IOException e) {
-            return new WeatherDto();
+            throw  new RuntimeException("Mapper read error", e);
         }
     }
 

@@ -1,12 +1,9 @@
 package ru.gubernik.weather.weatherservice.mapper;
 
 import ma.glasnost.orika.MapperFactory;
-import org.springframework.beans.factory.FactoryBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Inject;
 import java.util.List;
 
 /**
@@ -15,8 +12,12 @@ import java.util.List;
 @Service
 public class MapperFacadeImpl implements MapperFacade {
 
+    private final MapperFactory mapperFactory;
+
     @Autowired
-    private MapperFactory mapperFactory;
+    public MapperFacadeImpl(MapperFactory mapperFactory) {
+        this.mapperFactory = mapperFactory;
+    }
 
     /**
      * {@inheritDoc}
