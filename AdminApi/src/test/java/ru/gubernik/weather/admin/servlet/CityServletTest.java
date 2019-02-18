@@ -30,8 +30,8 @@ public class CityServletTest {
 
     /**
      * Проверка метода doPost при правильно введеных данных
-     * @throws ServletException
-     * @throws IOException
+     * @throws ServletException иссключение метода doPost
+     * @throws IOException иссключение метода doPost
      */
     @Test
     public void servletTest() throws ServletException, IOException {
@@ -55,8 +55,8 @@ public class CityServletTest {
 
     /**
      * Проверка при пустом названии города
-     * @throws ServletException
-     * @throws IOException
+     * @throws ServletException иссключение метода doPost
+     * @throws IOException иссключение метода doPost
      */
     @Test
     public void nullCityNameTest() throws ServletException, IOException {

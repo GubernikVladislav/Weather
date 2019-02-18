@@ -6,20 +6,20 @@ import ru.gubernik.weather.dbserviceapi.model.WeatherDto;
 import java.util.List;
 
 /**
- * нтерфейс для Remote Proxy
+ * Интерфейс для передачи через Hessian
  */
 public interface RemoteProxy {
 
     /**
-     * Получение данных о погоде в городе
+     * Получение данных о погоде по названию города
      * @param location - название города
-     * @return - объект c данными о погоде
+     * @return - объект с данными о погоде
      */
     WeatherDto getWeather(String location);
 
     /**
      * Получение списка доступных городов
-     * @return
+     * @return - List<LocationDto>
      */
     List<LocationDto> list();
 }

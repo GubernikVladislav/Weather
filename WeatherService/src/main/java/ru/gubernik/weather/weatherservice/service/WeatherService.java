@@ -13,13 +13,18 @@ public interface WeatherService {
     /**
      * Получение погоды по названию города
      * @param location название города
-     * @return
+     * @return объект с данными о погоде
      */
     WeatherDto getWeather(String location);
 
     /**
-     * Получение списка достыпных городов
-     * @return
+     * Получение списка доступных городов
+     * @return List список названий городов
      */
     List<LocationView> list();
+
+    /**
+     * Преобразование строки к нужному виду
+     */
+    String editString(String s);
 }

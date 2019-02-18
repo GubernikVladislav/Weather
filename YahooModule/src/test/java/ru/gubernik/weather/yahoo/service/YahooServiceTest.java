@@ -6,8 +6,11 @@ import org.junit.Test;
 import ru.gubernik.weather.yahoo.service.yahoo.YahooService;
 import ru.gubernik.weather.yahoo.service.yahoo.YahooServiceImpl;
 
-import java.io.UnsupportedEncodingException;
+import static org.junit.Assert.assertEquals;
 
+/**
+ * Тестирование сервиса отправки запроса в Yahoo
+ */
 public class YahooServiceTest {
 
     private YahooService yahooService = new YahooServiceImpl();
@@ -17,8 +20,11 @@ public class YahooServiceTest {
         Assert.assertNotNull(yahooService);
     }
 
+    /**
+     * Тестирование отправки запроса
+     */
     @Test
-    public void createRequestTest() throws UnsupportedEncodingException {
+    public void createRequestTest() {
 
         String location = "Moscow";
 
@@ -33,4 +39,17 @@ public class YahooServiceTest {
         Assert.assertTrue(response.contains("astronomy"));
         Assert.assertTrue(response.contains("condition"));
     }
+
+    /**
+     * Тестирование игнорирования пустой строки
+     */
+    @Test
+    public void ignoreEmptyString(){
+        String location = "";
+
+        String response = yahooService.createYahooRequest(location);
+
+        assertEquals(response, location);
+    }
+
 }

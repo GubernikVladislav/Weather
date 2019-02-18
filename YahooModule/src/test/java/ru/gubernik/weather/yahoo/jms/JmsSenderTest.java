@@ -14,10 +14,7 @@ import javax.jms.JMSProducer;
 import javax.jms.ObjectMessage;
 import javax.jms.Queue;
 
-import static org.mockito.Mockito.when;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.atLeast;
+import static org.mockito.Mockito.*;
 
 /**
  * Тестирование отправки jms сообщений
@@ -33,6 +30,9 @@ public class JmsSenderTest {
     @InjectMocks
     private JmsSenderImpl sender;
 
+    /**
+     * ПРоверка инъекций
+     */
     @Before
     public void checkNull(){
         Assert.assertNotNull(sender);
@@ -40,6 +40,9 @@ public class JmsSenderTest {
         Assert.assertNotNull(queue);
     }
 
+    /**
+     * Тестирование отправки сообщения в Jms очередь
+     */
     @Test
     public void senderTest(){
 
@@ -55,5 +58,17 @@ public class JmsSenderTest {
         verify(context, atLeast(1)).createObjectMessage(weather);
         verify(context, atLeast(1)).createProducer();
         verify(producer, atLeast(1)).send(queue, message);
+    }
+
+    /**
+     * Проверка игнорирования null Значений
+     */
+    @Test
+    public void noSendTest(){
+        WeatherDto weatherDto = null;
+
+        sender.send(weatherDto);
+
+        verifyZeroInteractions(context);
     }
 }

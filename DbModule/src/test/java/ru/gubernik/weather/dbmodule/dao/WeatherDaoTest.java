@@ -1,11 +1,12 @@
-package ru.gubernik.weather.dbmodule.service.dao;
+package ru.gubernik.weather.dbmodule.dao;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Spy;
 import org.mockito.runners.MockitoJUnitRunner;
-import ru.gubernik.weather.dbmodule.dao.WeatherDaoImpl;
 import ru.gubernik.weather.dbmodule.model.Astronomy;
 import ru.gubernik.weather.dbmodule.model.Atmosphere;
 import ru.gubernik.weather.dbmodule.model.Condition;
@@ -35,8 +36,42 @@ public class WeatherDaoTest {
     @Mock
     private EntityManager entityManager;
 
+    @Spy
     @InjectMocks
     private WeatherDaoImpl weatherDao;
+
+    private Weather weather;
+    private Location location;
+    private Observation observation;
+    private Astronomy astronomy;
+    private Atmosphere atmosphere;
+    private Wind wind;
+    private Condition condition;
+
+    @Before
+    public void set(){
+        weather = mock(Weather.class);
+        observation = mock(Observation.class);
+        astronomy = mock(Astronomy.class);
+        atmosphere = mock(Atmosphere.class);
+        wind = mock(Wind.class);
+        condition = mock(Condition.class);
+        location = mock(Location.class);
+        List list = mock(List.class);
+        Iterator iterator = mock(Iterator.class);
+        Forecast forecast = mock(Forecast.class);
+
+        when(weather.getLocation()).thenReturn(location);
+        when(weather.getCurrentObservation()).thenReturn(observation);
+        when(observation.getAstronomy()).thenReturn(astronomy);
+        when(observation.getAtmosphere()).thenReturn(atmosphere);
+        when(observation.getWind()).thenReturn(wind);
+        when(observation.getCondition()).thenReturn(condition);
+        when(weather.getForecasts()).thenReturn(list);
+        when(list.iterator()).thenReturn(iterator);
+        when(iterator.next()).thenReturn(forecast);
+
+    }
 
     /**
      * Проверка инъекций
@@ -52,26 +87,6 @@ public class WeatherDaoTest {
      */
     @Test
     public void saveTest(){
-        Weather weather = mock(Weather.class);
-        Observation observation = mock(Observation.class);
-        Astronomy astronomy = mock(Astronomy.class);
-        Atmosphere atmosphere = mock(Atmosphere.class);
-        Wind wind = mock(Wind.class);
-        Condition condition = mock(Condition.class);
-        Location location = mock(Location.class);
-        List<Forecast> list = mock(List.class);
-        Iterator<Forecast> iterator = mock(Iterator.class);
-        Forecast forecast = mock(Forecast.class);
-
-        when(weather.getLocation()).thenReturn(location);
-        when(weather.getCurrentObservation()).thenReturn(observation);
-        when(observation.getAstronomy()).thenReturn(astronomy);
-        when(observation.getAtmosphere()).thenReturn(atmosphere);
-        when(observation.getWind()).thenReturn(wind);
-        when(observation.getCondition()).thenReturn(condition);
-        when(weather.getForecasts()).thenReturn(list);
-        when(list.iterator()).thenReturn(iterator);
-        when(iterator.next()).thenReturn(forecast);
 
         weatherDao.save(weather);
 
@@ -89,17 +104,19 @@ public class WeatherDaoTest {
      */
     @Test
     public void updateTest(){
-        Weather weather = mock(Weather.class);
 
         weatherDao.update(weather);
 
         verify(entityManager, times(1)).merge(weather);
     }
 
+    /**
+     * Тестирование получение данных по нахванию города
+     */
     @Test
     public void getTest(){
         CriteriaBuilder criteriaBuilder = mock(CriteriaBuilder.class);
-        CriteriaQuery<Weather> criteriaQuery = mock(CriteriaQuery.class);
+        CriteriaQuery criteriaQuery = mock(CriteriaQuery.class);
         Root root = mock(Root.class);
         Weather weather = mock(Weather.class);
         TypedQuery query = mock(TypedQuery.class);
@@ -110,7 +127,7 @@ public class WeatherDaoTest {
         when(entityManager.createQuery(criteriaQuery)).thenReturn(query);
         when(query.getSingleResult()).thenReturn(weather);
 
-        weatherDao.get("");
+        weatherDao.get("Moscow");
 
         verify(entityManager, times(1)).getCriteriaBuilder();
         verify(criteriaBuilder, times(1)).createQuery(Weather.class);

@@ -44,8 +44,8 @@ public class CityServlet extends HttpServlet {
     /**
      * Перезагрузка .jsp страницы
      */
-    protected void setForward(HttpServletRequest req, HttpServletResponse resp, String atribute) throws ServletException, IOException {
-        req.setAttribute("exception", atribute);
+    private void setForward(HttpServletRequest req, HttpServletResponse resp, String attribute) throws ServletException, IOException {
+        req.setAttribute("exception", attribute);
         req.getRequestDispatcher("/index.jsp").forward(req, resp);
     }
 }

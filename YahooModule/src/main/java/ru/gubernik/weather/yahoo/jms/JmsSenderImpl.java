@@ -5,7 +5,6 @@ import ru.gubernik.weather.dbserviceapi.model.WeatherDto;
 import javax.annotation.Resource;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
-import javax.jms.Destination;
 import javax.jms.JMSContext;
 import javax.jms.Message;
 import javax.jms.Queue;
@@ -28,8 +27,8 @@ public class JmsSenderImpl implements JmsSender {
 
     /**
      * Конструктор для тестов
-     * @param context
-     * @param queue
+     * @param context - Jms контекст
+     * @param queue - Jms очередь
      */
     protected  JmsSenderImpl(JMSContext context, Queue queue){
         this.context = context;
@@ -43,7 +42,7 @@ public class JmsSenderImpl implements JmsSender {
     public void send(WeatherDto weather) {
         if (weather != null) {
             Message message = context.createObjectMessage(weather);
-            context.createProducer().send((Destination) queue, message);
+            context.createProducer().send(queue, message);
         }
     }
 }

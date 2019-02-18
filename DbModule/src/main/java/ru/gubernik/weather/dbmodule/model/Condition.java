@@ -33,7 +33,7 @@ public class Condition implements Serializable {
     /**
      * Описание
      */
-    @Column(name = "text")
+    @Column(name = "text", length = 50)
     private String text;
 
     /**

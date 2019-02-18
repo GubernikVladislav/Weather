@@ -4,7 +4,6 @@ import ru.gubernik.weather.dbmodule.model.Forecast;
 import ru.gubernik.weather.dbmodule.model.Location;
 import ru.gubernik.weather.dbmodule.model.Weather;
 
-import javax.annotation.Resource;
 import javax.enterprise.context.ApplicationScoped;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -33,6 +32,10 @@ public class WeatherDaoImpl implements WeatherDao {
     @Override
     public void save(Weather weather) {
 
+        if(checkNull(weather)){
+            return;
+        }
+
         weather.getLocation().setWeather(weather);
 
         weather.setCityName(weather.getLocation().getCity());
@@ -55,6 +58,10 @@ public class WeatherDaoImpl implements WeatherDao {
      */
     @Override
     public void update(Weather weather) {
+
+        if(checkNull(weather)){
+            return;
+        }
         entityManager.merge(weather);
     }
 
@@ -64,6 +71,10 @@ public class WeatherDaoImpl implements WeatherDao {
     @Override
     public Weather get(String location) {
 
+        if(location.isEmpty()){
+            return new Weather();
+        }
+
         CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
         CriteriaQuery<Weather> criteriaQuery = criteriaBuilder.createQuery(Weather.class);
         Root root = criteriaQuery.from(Weather.class);
@@ -71,8 +82,7 @@ public class WeatherDaoImpl implements WeatherDao {
         criteriaQuery.where(criteriaBuilder.equal(root.get("cityName"), location));
 
         TypedQuery query = entityManager.createQuery(criteriaQuery);
-        Weather weather = (Weather) query.getSingleResult();
-        return weather;
+        return (Weather) query.getSingleResult();
     }
 
     /**
@@ -83,11 +93,26 @@ public class WeatherDaoImpl implements WeatherDao {
 
         CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
         CriteriaQuery<Location> criteriaQuery = criteriaBuilder.createQuery(Location.class);
-        Root root = criteriaQuery.from(Location.class);
+
+        criteriaQuery.select(criteriaQuery.from(Location.class));
 
         TypedQuery<Location> query = entityManager.createQuery(criteriaQuery);
-        List<Location> locations = query.getResultList();
 
-        return locations;
+        return query.getResultList();
+    }
+
+    /**
+     * Проверка null значений в переданном объекте
+     * @param weather - проверяемый объект
+     * @return true, если найдено null значение, иначе - false
+     */
+    private boolean checkNull(Weather weather){
+
+        return weather == null || weather.getCurrentObservation() == null
+                || weather.getCurrentObservation().getCondition() == null
+                || weather.getCurrentObservation().getAtmosphere() == null
+                || weather.getCurrentObservation().getAstronomy() == null
+                || weather.getCurrentObservation().getWind() == null
+                || weather.getForecasts() == null;
     }
 }

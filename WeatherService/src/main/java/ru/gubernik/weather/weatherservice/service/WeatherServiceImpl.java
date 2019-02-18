@@ -8,6 +8,7 @@ import ru.gubernik.weather.dbserviceapi.model.WeatherDto;
 import ru.gubernik.weather.dbserviceapi.service.RemoteProxy;
 import ru.gubernik.weather.weatherservice.view.LocationView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -17,7 +18,6 @@ import java.util.List;
 public class WeatherServiceImpl implements WeatherService{
 
     private final RemoteProxy remoteProxy;
-
     private final MapperFactory mapperFactory;
 
     @Autowired
@@ -32,16 +32,38 @@ public class WeatherServiceImpl implements WeatherService{
     @Override
     public WeatherDto getWeather(String location) {
 
-        location = location.substring(0,1).toUpperCase() + location.substring(1).toLowerCase();
+        if(location.isEmpty()){
+            return new WeatherDto();
+        }
 
-        return remoteProxy.getWeather(location);
+        return remoteProxy.getWeather(editString(location));
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<LocationView> list() {
 
         List<LocationDto> dtoList = remoteProxy.list();
-        List<LocationView> views = mapperFactory.getMapperFacade().mapAsList(dtoList, LocationView.class);
+        List<LocationView> views = new ArrayList<>();
+
+        for (LocationDto dto : dtoList){
+            views.add(new LocationView(dto.getCity()));
+        }
+
         return views;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String editString(String s) {
+
+        if (s.isEmpty()){
+            return "";
+        }
+        return s.substring(0,1).toUpperCase() + s.substring(1).toLowerCase();
     }
 }

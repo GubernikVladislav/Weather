@@ -3,7 +3,6 @@ package ru.gubernik.weather.dbmodule.dao.spring;
 import org.springframework.stereotype.Service;
 import ru.gubernik.weather.dbmodule.model.Location;
 import ru.gubernik.weather.dbmodule.model.Weather;
-import sun.awt.windows.WEmbeddedFrame;
 
 import javax.annotation.Resource;
 import javax.persistence.EntityManager;
@@ -22,7 +21,7 @@ public class SpringWeatherDaoImpl implements SpringWeatherDao {
 
     private EntityManager entityManager;
 
-    @Resource(mappedName = "java:/yourEntityManagerFactoryName")
+    @Resource(mappedName = "java:/entityManagerFactory")
     private EntityManagerFactory factory;
 
     /**
@@ -30,6 +29,11 @@ public class SpringWeatherDaoImpl implements SpringWeatherDao {
      */
     @Override
     public Weather get(String location) {
+
+        if (location.isEmpty()){
+            return new Weather();
+        }
+
         entityManager = factory.createEntityManager();
 
         CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
@@ -39,23 +43,23 @@ public class SpringWeatherDaoImpl implements SpringWeatherDao {
         criteriaQuery.where(criteriaBuilder.equal(root.get("cityName"), location));
 
         TypedQuery query = entityManager.createQuery(criteriaQuery);
-        Weather weather = (Weather) query.getSingleResult();
 
-        return weather;
+        return (Weather) query.getSingleResult();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<Location> locations() {
         entityManager = factory.createEntityManager();
 
         CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
         CriteriaQuery<Location> criteriaQuery = criteriaBuilder.createQuery(Location.class);
-        Root root = criteriaQuery.from(Location.class);
 
-        criteriaQuery.select(root);
+        criteriaQuery.select(criteriaQuery.from(Location.class));
 
         TypedQuery query = entityManager.createQuery(criteriaQuery);
-        List<Location> locations = query.getResultList();
-        return locations;
+        return (List<Location>) query.getResultList();
     }
 }

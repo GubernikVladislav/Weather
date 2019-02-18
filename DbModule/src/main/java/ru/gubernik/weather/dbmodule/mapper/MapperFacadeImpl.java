@@ -33,5 +33,12 @@ public class MapperFacadeImpl implements MapperFacade {
     @Override
     public <O, T> void map(O object, T target) {
 
+        try {
+            if(mapperFactory.getObject() != null) {
+                mapperFactory.getObject().getMapperFacade().map(object, target);
+            }
+        } catch (Exception e) {
+            throw new RuntimeException("Mapper error", e);
+        }
     }
 }

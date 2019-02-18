@@ -34,7 +34,7 @@ public class Forecast implements Serializable {
     /**
      * День недели
      */
-    @Column(name = "day")
+    @Column(name = "day", length = 3)
     private String day;
 
     /**
@@ -58,7 +58,7 @@ public class Forecast implements Serializable {
     /**
      * Описание
      */
-    @Column(name = "text")
+    @Column(name = "text", length = 50)
     private String text;
 
     /**

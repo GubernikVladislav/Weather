@@ -18,14 +18,13 @@ import java.util.List;
 @Service
 public class RemoteProxyImpl implements RemoteProxy {
 
-    @Autowired
-    private SpringWeatherDao weatherDao;
+    private final SpringWeatherDao weatherDao;
+    private final MapperFactory mapperFactory;
 
     @Autowired
-    private MapperFactory mapperFactory;
-
-    public RemoteProxyImpl(){
-
+    public RemoteProxyImpl(SpringWeatherDao weatherDao, MapperFactory mapperFactory){
+        this.weatherDao = weatherDao;
+        this.mapperFactory = mapperFactory;
     }
 
     /**
@@ -34,21 +33,26 @@ public class RemoteProxyImpl implements RemoteProxy {
     @Override
     public WeatherDto getWeather(String location) {
 
+        if(location.isEmpty()){
+            return new WeatherDto();
+        }
+
         Weather weather = weatherDao.get(location);
 
         try {
-            WeatherDto weatherDto = mapperFactory.getMapperFacade().map(weather, WeatherDto.class);
-            return weatherDto;
+            return mapperFactory.getMapperFacade().map(weather, WeatherDto.class);
         } catch (Exception e) {
             throw new RuntimeException("Mapper Error");
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<LocationDto> list() {
 
         List<Location> locations = weatherDao.locations();
-        List<LocationDto> dtoList = mapperFactory.getMapperFacade().mapAsList(locations, LocationDto.class);
-        return dtoList;
+        return mapperFactory.getMapperFacade().mapAsList(locations, LocationDto.class);
     }
 }

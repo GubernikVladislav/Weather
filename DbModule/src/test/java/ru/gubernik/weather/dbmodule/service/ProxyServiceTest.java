@@ -1,8 +1,7 @@
-package ru.gubernik.weather.dbmodule.service.service;
+package ru.gubernik.weather.dbmodule.service;
 
 import ma.glasnost.orika.MapperFacade;
 import ma.glasnost.orika.MapperFactory;
-import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -11,7 +10,6 @@ import org.mockito.Spy;
 import org.mockito.runners.MockitoJUnitRunner;
 import ru.gubernik.weather.dbmodule.dao.spring.SpringWeatherDaoImpl;
 import ru.gubernik.weather.dbmodule.model.Weather;
-import ru.gubernik.weather.dbmodule.service.RemoteProxyImpl;
 import ru.gubernik.weather.dbserviceapi.model.WeatherDto;
 
 import static org.junit.Assert.assertEquals;
@@ -43,7 +41,7 @@ public class ProxyServiceTest {
     @Test
     public void getWeather(){
         Weather weather = mock(Weather.class);
-        String location = "";
+        String location = "Moscow";
         WeatherDto weatherDto = mock(WeatherDto.class);
         MapperFacade mapperFacade = mock(MapperFacade.class);
 

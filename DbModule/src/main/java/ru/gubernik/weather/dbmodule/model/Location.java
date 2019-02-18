@@ -42,19 +42,19 @@ public class Location implements Serializable {
     /**
      * Название города
      */
-    @Column(name = "city")
+    @Column(name = "city", length = 50)
     private String city;
 
     /**
      * Регион
      */
-    @Column(name = "region")
+    @Column(name = "region", length = 50)
     private String region;
 
     /**
      * Страна
      */
-    @Column(name = "country")
+    @Column(name = "country", length = 100)
     private String country;
 
     /**

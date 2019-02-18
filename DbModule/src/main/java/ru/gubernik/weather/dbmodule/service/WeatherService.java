@@ -1,7 +1,6 @@
 package ru.gubernik.weather.dbmodule.service;
 
 import ru.gubernik.weather.dbmodule.model.Location;
-import ru.gubernik.weather.dbserviceapi.model.LocationDto;
 import ru.gubernik.weather.dbserviceapi.model.WeatherDto;
 
 import java.util.List;
@@ -25,7 +24,7 @@ public interface WeatherService {
 
     /**
      * Получение списка городов, имеющих информацию о погоде
-     * @return
+     * @return список Location
      */
     List<Location> locationList();
 }

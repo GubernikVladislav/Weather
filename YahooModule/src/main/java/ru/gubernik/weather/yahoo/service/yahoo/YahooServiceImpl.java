@@ -31,6 +31,10 @@ public class YahooServiceImpl implements YahooService {
     @Override
     public String createYahooRequest(String location)  {
 
+        if (location.isEmpty()){
+            return "";
+        }
+
         RestTemplate restTemplate = new RestTemplate();
 
         final String appId = "kcPacc6g";
@@ -60,12 +64,12 @@ public class YahooServiceImpl implements YahooService {
         parameters.add("u=c");
         Collections.sort(parameters);
 
-        StringBuffer parametersList = new StringBuffer();
+        StringBuilder parametersList = new StringBuilder();
         for (int i = 0; i < parameters.size(); i++) {
-            parametersList.append(((i > 0) ? "&" : "") + parameters.get(i));
+            parametersList.append((i > 0) ? "&" : "").append(parameters.get(i));
         }
 
-        String signatureString = null;
+        String signatureString;
         try {
             signatureString = "GET&" +
                     URLEncoder.encode(url, "UTF-8") + "&" +

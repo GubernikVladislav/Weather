@@ -13,13 +13,13 @@ public interface WeatherController {
     /**
      * Получение погоды по названию города
      * @param location - название города
-     * @return
+     * @return объект с информацией о погоде
      */
-    WeatherDto getWeather(String location) throws Exception;
+    WeatherDto getWeather(String location);
 
     /**
      * Получение списка доступных городов
-     * @return
+     * @return List список с названиями городов
      */
     List<LocationView> list();
 }

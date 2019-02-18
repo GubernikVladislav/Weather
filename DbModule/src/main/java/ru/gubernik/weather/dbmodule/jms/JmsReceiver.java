@@ -3,10 +3,8 @@ package ru.gubernik.weather.dbmodule.jms;
 import ru.gubernik.weather.dbmodule.service.WeatherService;
 import ru.gubernik.weather.dbserviceapi.model.WeatherDto;
 
-import javax.annotation.Resource;
 import javax.ejb.ActivationConfigProperty;
 import javax.ejb.MessageDriven;
-import javax.ejb.MessageDrivenContext;
 import javax.inject.Inject;
 import javax.jms.JMSException;
 import javax.jms.Message;

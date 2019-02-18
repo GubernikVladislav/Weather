@@ -30,8 +30,11 @@ public class ModuleServiceImpl implements ModuleService {
     @Override
     public void request(String location) {
 
-        String jsonString;
-        jsonString = yahooService.createYahooRequest(location);
+        if (location.isEmpty()){
+            return;
+        }
+
+        String jsonString = yahooService.createYahooRequest(location);
         WeatherDto weather = jsonMap(jsonString);
         sendJms(weather);
     }
@@ -41,6 +44,11 @@ public class ModuleServiceImpl implements ModuleService {
      */
     @Override
     public WeatherDto jsonMap(String jsonString) {
+
+        if(jsonString.isEmpty()){
+            return new WeatherDto();
+        }
+
         ObjectMapper objectMapper = new ObjectMapper();
         WeatherDto weather;
         try {
@@ -56,7 +64,9 @@ public class ModuleServiceImpl implements ModuleService {
      */
     @Override
     public void sendJms(WeatherDto weather) {
-        jmsSender.send(weather);
+        if(weather != null) {
+            jmsSender.send(weather);
+        }
     }
 
 }

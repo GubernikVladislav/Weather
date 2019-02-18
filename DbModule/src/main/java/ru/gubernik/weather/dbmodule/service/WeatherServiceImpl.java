@@ -5,7 +5,6 @@ import ru.gubernik.weather.dbmodule.dao.WeatherDao;
 import ru.gubernik.weather.dbmodule.mapper.MapperFacade;
 import ru.gubernik.weather.dbmodule.model.Location;
 import ru.gubernik.weather.dbmodule.model.Weather;
-import ru.gubernik.weather.dbserviceapi.model.LocationDto;
 import ru.gubernik.weather.dbserviceapi.model.WeatherDto;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -18,14 +17,13 @@ import java.util.List;
 @ApplicationScoped
 public class WeatherServiceImpl implements WeatherService {
 
-    @Inject
-    private WeatherDao weatherDao;
+    private final WeatherDao weatherDao;
+    private final MapperFacade mapperFacade;
 
     @Inject
-    private MapperFacade mapperFacade;
-
-    public WeatherServiceImpl(){
-
+    public WeatherServiceImpl(WeatherDao weatherDao, MapperFacade mapperFacade){
+        this.weatherDao = weatherDao;
+        this.mapperFacade = mapperFacade;
     }
 
     /**
@@ -34,6 +32,10 @@ public class WeatherServiceImpl implements WeatherService {
     @Override
     @Transactional
     public void save(WeatherDto weatherDto) {
+
+        if(checkNull(weatherDto)){
+            return;
+        }
 
         Weather weather = mapperFacade.map(weatherDto, Weather.class);
         Location location = weather.getLocation();
@@ -52,6 +54,10 @@ public class WeatherServiceImpl implements WeatherService {
     @Override
     public void update(WeatherDto weatherDto) {
 
+        if(checkNull(weatherDto)){
+            return;
+        }
+
         Weather weather = weatherDao.get(weatherDto.getLocation().getCity());
         mapperFacade.map(weatherDto, weather);
         weatherDao.update(weather);
@@ -63,5 +69,20 @@ public class WeatherServiceImpl implements WeatherService {
     @Override
     public List<Location> locationList() {
         return weatherDao.getLocationList();
+    }
+
+    /**
+     * Проверка null значений в переданном объекте
+     * @param weather - проверяемый объект
+     * @return true, если найдено null значение, иначе - false
+     */
+    private boolean checkNull(WeatherDto weather){
+
+        return weather == null || weather.getCurrentObservation() == null
+                || weather.getCurrentObservation().getCondition() == null
+                || weather.getCurrentObservation().getAtmosphere() == null
+                || weather.getCurrentObservation().getAstronomy() == null
+                || weather.getCurrentObservation().getWind() == null
+                || weather.getForecasts() == null;
     }
 }

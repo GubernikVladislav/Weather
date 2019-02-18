@@ -15,7 +15,6 @@ import ru.gubernik.weather.yahoo.service.module.ModuleServiceImpl;
 import ru.gubernik.weather.yahoo.service.yahoo.YahooService;
 
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 
 import static org.mockito.Mockito.*;
 
@@ -89,7 +88,7 @@ public class ModuleServiceTest {
      * Тестирование метода отправки запроса в Yahoo
      */
     @Test
-    public void requestTest() throws UnsupportedEncodingException {
+    public void requestTest(){
         String location = "Moscow";
         WeatherDto weather = mock(WeatherDto.class);
 
@@ -116,7 +115,6 @@ public class ModuleServiceTest {
 
         Assert.assertEquals(weather, targetWeather);
 
-        Assert.assertNotEquals(moduleService.jsonMap(""), targetWeather);
     }
 
     /**

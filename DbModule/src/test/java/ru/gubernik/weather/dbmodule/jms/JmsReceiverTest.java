@@ -1,4 +1,4 @@
-package ru.gubernik.weather.dbmodule.service.jms;
+package ru.gubernik.weather.dbmodule.jms;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -6,7 +6,6 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import ru.gubernik.weather.dbmodule.jms.JmsReceiver;
 import ru.gubernik.weather.dbmodule.service.WeatherService;
 import ru.gubernik.weather.dbserviceapi.model.WeatherDto;
 
@@ -38,7 +37,7 @@ public class JmsReceiverTest {
 
     /**
      * Проверка получения сообщения
-     * @throws JMSException
+     * @throws JMSException - исключения методов message
      */
     @Test
     public void receiveTest() throws JMSException {
@@ -57,7 +56,7 @@ public class JmsReceiverTest {
 
     /**
      * Проверка пропуска сообщения, если сообщение не приводится к нужному типу
-     * @throws JMSException
+     * @throws JMSException исключения методов message
      */
     @Test
     public void noReceiveTest() throws JMSException {

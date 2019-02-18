@@ -13,13 +13,13 @@ public interface SpringWeatherDao {
     /**
      * Получение данных о погоде по названию города
      * @param location - название города
-     * @return
+     * @return объект с даныыми о погоде
      */
     Weather get(String location);
 
     /**
      * Получение списка достыпных городов
-     * @return
+     * @return список Location
      */
     List<Location> locations();
 }

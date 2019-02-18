@@ -31,9 +31,11 @@ public class WeatherControllerImpl implements WeatherController {
      * {@inheritDoc}
      */
     @RequestMapping(value = "/{location}", method = {GET})
-    public WeatherDto getWeather(@PathVariable("location") String location) throws Exception {
+    public WeatherDto getWeather(@PathVariable("location") String location){
 
-        LocationView view = new LocationView(location);
+        String editLocation = weatherService.editString(location);
+        LocationView view = new LocationView(editLocation);
+
         if(list().contains(view) && location.matches("^[a-zA-Z]+[\\-]?[a-zA-Z]+[\\-]?[a-zA-Z]+$")){
             return weatherService.getWeather(location);
         }else {
@@ -41,7 +43,11 @@ public class WeatherControllerImpl implements WeatherController {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
+    @RequestMapping(value = "/locations", method = {GET})
     public List<LocationView> list() {
         return weatherService.list();
     }

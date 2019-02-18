@@ -28,8 +28,6 @@ public class JmsSenderImpl implements JmsSender {
 
     /**
      * Конструктор для тестов
-     * @param context
-     * @param queue
      */
     protected JmsSenderImpl(JMSContext context, Queue queue){
         this.context = context;
@@ -38,9 +36,12 @@ public class JmsSenderImpl implements JmsSender {
 
     /**
      * Отправка полученного сообщения в JSM очередь
-     * @param message
+     * @param message - текст сообщения
      */
     public void send(String message){
+        if (message.isEmpty()){
+            return;
+        }
         context.createProducer().send(queue, message);
     }
 }
