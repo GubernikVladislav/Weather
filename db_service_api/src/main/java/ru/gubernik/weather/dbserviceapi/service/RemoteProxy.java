@@ -13,4 +13,5 @@ public interface RemoteProxy {
      * @return - объект c данными о погоде
      */
     WeatherDto getWeather(String location);
+
 }

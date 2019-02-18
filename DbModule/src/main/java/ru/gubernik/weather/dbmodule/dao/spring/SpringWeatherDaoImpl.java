@@ -1,6 +1,7 @@
 package ru.gubernik.weather.dbmodule.dao.spring;
 
 import org.springframework.stereotype.Service;
+import ru.gubernik.weather.dbmodule.model.Location;
 import ru.gubernik.weather.dbmodule.model.Weather;
 import sun.awt.windows.WEmbeddedFrame;
 
@@ -11,6 +12,7 @@ import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+import java.util.List;
 
 /**
  * {@inheritDoc}
@@ -40,5 +42,20 @@ public class SpringWeatherDaoImpl implements SpringWeatherDao {
         Weather weather = (Weather) query.getSingleResult();
 
         return weather;
+    }
+
+    @Override
+    public List<Location> locations() {
+        entityManager = factory.createEntityManager();
+
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Location> criteriaQuery = criteriaBuilder.createQuery(Location.class);
+        Root root = criteriaQuery.from(Location.class);
+
+        criteriaQuery.select(root);
+
+        TypedQuery query = entityManager.createQuery(criteriaQuery);
+        List<Location> locations = query.getResultList();
+        return locations;
     }
 }

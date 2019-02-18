@@ -10,6 +10,7 @@ import ru.gubernik.weather.dbmodule.dao.spring.SpringWeatherDaoImpl;
 import ru.gubernik.weather.dbmodule.model.Weather;
 
 import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -24,25 +25,27 @@ import static org.mockito.Mockito.verify;
 public class SpringWeatherDaoTest {
 
     @Mock
-    private EntityManager entityManager;
+    private EntityManagerFactory entityManagerFactory;
 
     @InjectMocks
     private SpringWeatherDaoImpl weatherDaoTest;
 
     @Test
     public void checkNull(){
-        assertNotNull(entityManager);
+        assertNotNull(entityManagerFactory);
         assertNotNull(weatherDaoTest);
     }
 
     @Test
     public void getTest(){
+        EntityManager entityManager = mock(EntityManager.class);
         CriteriaBuilder criteriaBuilder = mock(CriteriaBuilder.class);
         CriteriaQuery<Weather> criteriaQuery = mock(CriteriaQuery.class);
         Root root = mock(Root.class);
         Weather weather = mock(Weather.class);
         TypedQuery query = mock(TypedQuery.class);
 
+        when(entityManagerFactory.createEntityManager()).thenReturn(entityManager);
         when(entityManager.getCriteriaBuilder()).thenReturn(criteriaBuilder);
         when(criteriaBuilder.createQuery(Weather.class)).thenReturn(criteriaQuery);
         when(criteriaQuery.from(Weather.class)).thenReturn(root);

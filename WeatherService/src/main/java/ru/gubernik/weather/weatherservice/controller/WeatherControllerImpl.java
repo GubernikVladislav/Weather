@@ -1,15 +1,11 @@
 package ru.gubernik.weather.weatherservice.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.gubernik.weather.dbserviceapi.model.WeatherDto;
 import ru.gubernik.weather.weatherservice.service.WeatherService;
-import ru.gubernik.weather.weatherservice.view.LocationView;
-
-import java.util.List;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
@@ -32,16 +28,8 @@ public class WeatherControllerImpl implements WeatherController {
      * {@inheritDoc}
      */
     @RequestMapping(value = "/{location}", method = {GET})
-    public WeatherDto getWeather(@PathVariable("location") String location) {
+    public WeatherDto getWeather(@PathVariable("location") String location) throws Exception {
+
         return weatherService.getWeather(location);
     }
-
-    /**
-     * {@inheritDoc}
-     */
-    @RequestMapping(value = "/locations", method = {GET})
-    public List<LocationView> getLocationList(){
-        return  weatherService.getLocations();
-    }
-
 }

@@ -1,6 +1,9 @@
 package ru.gubernik.weather.dbmodule.dao.spring;
 
+import ru.gubernik.weather.dbmodule.model.Location;
 import ru.gubernik.weather.dbmodule.model.Weather;
+
+import java.util.List;
 
 /**
  * Интерфейс Dao для использования со Spring
@@ -13,4 +16,10 @@ public interface SpringWeatherDao {
      * @return
      */
     Weather get(String location);
+
+    /**
+     * Получение списка достыпных городов
+     * @return
+     */
+    List<Location> locations();
 }

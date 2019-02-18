@@ -5,9 +5,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.gubernik.weather.dbserviceapi.model.WeatherDto;
 import ru.gubernik.weather.dbserviceapi.service.RemoteProxy;
-import ru.gubernik.weather.weatherservice.view.LocationView;
-
-import java.util.List;
 
 /**
  * {@inheritDoc}
@@ -29,16 +26,6 @@ public class WeatherServiceImpl implements WeatherService{
 
         location = location.substring(0,1).toUpperCase() + location.substring(1).toLowerCase();
 
-        System.out.println(location);
-
         return remoteProxy.getWeather(location);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public List<LocationView> getLocations() {
-        return null;
     }
 }
