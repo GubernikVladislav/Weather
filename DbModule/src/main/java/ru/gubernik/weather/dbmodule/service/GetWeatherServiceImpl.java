@@ -8,21 +8,21 @@ import ru.gubernik.weather.dbmodule.model.Location;
 import ru.gubernik.weather.dbmodule.model.Weather;
 import ru.gubernik.weather.dbserviceapi.model.LocationDto;
 import ru.gubernik.weather.dbserviceapi.model.WeatherDto;
-import ru.gubernik.weather.dbserviceapi.service.RemoteProxy;
+import ru.gubernik.weather.dbserviceapi.service.GetWeatherService;
 
 import java.util.List;
 
 /**
- * Реализация интерфейса RemoteProxy
+ * {@inheritDoc}
  */
 @Service
-public class RemoteProxyImpl implements RemoteProxy {
+public class GetWeatherServiceImpl implements GetWeatherService {
 
     private final SpringWeatherDao weatherDao;
     private final MapperFactory mapperFactory;
 
     @Autowired
-    public RemoteProxyImpl(SpringWeatherDao weatherDao, MapperFactory mapperFactory){
+    public GetWeatherServiceImpl(SpringWeatherDao weatherDao, MapperFactory mapperFactory){
         this.weatherDao = weatherDao;
         this.mapperFactory = mapperFactory;
     }
@@ -33,7 +33,7 @@ public class RemoteProxyImpl implements RemoteProxy {
     @Override
     public WeatherDto getWeather(String location) {
 
-        if(location.isEmpty()){
+        if(location == null || location.isEmpty()){
             return new WeatherDto();
         }
 

@@ -14,7 +14,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Version;
-import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
 
@@ -23,7 +22,7 @@ import java.util.Objects;
  */
 @Entity
 @Table(name = "WEATHER")
-public class Weather implements Serializable {
+public class Weather {
 
     @JsonIgnore
     @Id

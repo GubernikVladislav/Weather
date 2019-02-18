@@ -24,8 +24,13 @@ import javax.persistence.criteria.Root;
 import java.util.Iterator;
 import java.util.List;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyZeroInteractions;
+import static org.mockito.Mockito.when;
 
 /**
  * Тестирование Дао класса
@@ -100,6 +105,18 @@ public class WeatherDaoTest {
     }
 
     /**
+     * Тестирование добавления при null параметре
+     */
+    @Test
+    public void nullSaveTest(){
+        Weather weather = null;
+
+        weatherDao.save(weather);
+
+        verifyZeroInteractions(entityManager);
+    }
+
+    /**
      * Тестирование обновления данных
      */
     @Test
@@ -108,6 +125,18 @@ public class WeatherDaoTest {
         weatherDao.update(weather);
 
         verify(entityManager, times(1)).merge(weather);
+    }
+
+    /**
+     * Тестирование обновления при null параметре
+     */
+    @Test
+    public void nullUpdateTest(){
+        Weather weather = null;
+
+        weatherDao.update(weather);
+
+        verifyZeroInteractions(entityManager);
     }
 
     /**
@@ -134,5 +163,58 @@ public class WeatherDaoTest {
         verify(criteriaQuery, times(1)).from(Weather.class);
         verify(entityManager, times(1)).createQuery(criteriaQuery);
         verify(query, times(1)).getSingleResult();
+    }
+
+    /**
+     * Тестирование получения данных при null параметре
+     */
+    @Test
+    public void nullGetTest(){
+        String nullLocation = null;
+
+        Weather weather = weatherDao.get(nullLocation);
+
+        assertEquals(weather, new Weather());
+        verifyZeroInteractions(entityManager);
+    }
+
+    /**
+     * Тестирование получения данных при пустом параметре
+     */
+    @Test
+    public void emptyTest(){
+        String emptyLocation = "";
+
+        Weather weather = weatherDao.get(emptyLocation);
+
+        assertEquals(weather, new Weather());
+        verifyZeroInteractions(entityManager);
+    }
+
+    /**
+     * Тестирование получение списка доступных городов
+     */
+    @Test
+    public void listTest(){
+        CriteriaBuilder criteriaBuilder = mock(CriteriaBuilder.class);
+        CriteriaQuery criteriaQuery = mock(CriteriaQuery.class);
+        Root root = mock(Root.class);
+        TypedQuery query = mock(TypedQuery.class);
+        List list = mock(List.class);
+
+        when(entityManager.getCriteriaBuilder()).thenReturn(criteriaBuilder);
+        when(criteriaBuilder.createQuery(Location.class)).thenReturn(criteriaQuery);
+        when(criteriaQuery.from(Location.class)).thenReturn(root);
+
+        when(entityManager.createQuery(criteriaQuery)).thenReturn(query);
+        when(query.getResultList()).thenReturn(list);
+
+        weatherDao.getLocationList();
+
+        verify(entityManager, times(1)).getCriteriaBuilder();
+        verify(criteriaBuilder, times(1)).createQuery(Location.class);
+        verify(criteriaQuery, times(1)).from(Location.class);
+        verify(entityManager, times(1)).createQuery(criteriaQuery);
+        verify(query, times(1)).getResultList();
     }
 }

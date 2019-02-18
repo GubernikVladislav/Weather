@@ -5,20 +5,23 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.remoting.caucho.HessianServiceExporter;
-import ru.gubernik.weather.dbserviceapi.service.RemoteProxy;
+import ru.gubernik.weather.dbserviceapi.service.GetWeatherService;
 
+/**
+ * Файл конфигурации Spring
+ */
 @Configuration
 @ComponentScan(basePackages = {"ru.gubernik.weather.dbmodule"})
 public class AppConfig {
 
     @Autowired
-    private RemoteProxy remoteProxy;
+    private GetWeatherService getWeatherService;
 
     @Bean(name = "/WeatherService")
     public HessianServiceExporter hessianServiceExporter(){
         HessianServiceExporter hessianServiceExporter = new HessianServiceExporter();
-        hessianServiceExporter.setService(remoteProxy);
-        hessianServiceExporter.setServiceInterface(RemoteProxy.class);
+        hessianServiceExporter.setService(getWeatherService);
+        hessianServiceExporter.setServiceInterface(GetWeatherService.class);
         return hessianServiceExporter;
     }
 }

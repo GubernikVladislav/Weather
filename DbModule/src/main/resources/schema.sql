@@ -1,75 +1,81 @@
 CREATE TABLE IF NOT EXISTS WEATHER(
-id SERIAL PRIMARY KEY,
-version INTEGER,
-LOCATION VARCHAR(50)
+    id SERIAL PRIMARY KEY COMMENT'ИДЕНТИФИКАТОР',
+    version INTEGER COMMENT'ВЕРСИЯ',
+    LOCATION VARCHAR(50) COMMENT'НАЗВАНИЕ ГОРОДА'
 );
+COMMENT ON TABLE WEATHER IS 'ПОГОДА';
 
 CREATE TABLE IF NOT EXISTS LOCATION(
-id SERIAL PRIMARY KEY,
-version INTEGER,
-weather_id INTEGER,
-woeid INTEGER,
-city VARCHAR(50),
-region VARCHAR(50),
-country VARCHAR(100),
-lat FLOAT,
-long FLOAT,
-timezone_id VARCHAR(100)
+    id SERIAL PRIMARY KEY COMMENT'ИДЕНТИФИКАТОР',
+    version INTEGER COMMENT'ВЕРСИЯ',
+    weather_id INTEGER COMMENT'ИДЕНТИФИКАТОР ПОГОДЫ',
+    woeid INTEGER COMMENT'ИДЕНТИФИКАТОР YAHOO',
+    city VARCHAR(50) COMMENT'ГОРОД',
+    region VARCHAR(50) COMMENT'РЕГИОН',
+    country VARCHAR(100) COMMENT'СТРАНА',
+    lat FLOAT COMMENT'ШИРОТА',
+    long FLOAT COMMENT'ДОЛГОТА',
+    timezone_id VARCHAR(100) COMMENT'ЧАСОВОЙ ПОЯС'
 );
+COMMENT ON TABLE LOCATION IS 'ГОРОД';
 
 CREATE TABLE IF NOT EXISTS current_observation(
-id SERIAL PRIMARY KEY,
-version INTEGER,
-weather_id INTEGER,
-pubDate INTEGER
+    id SERIAL PRIMARY KEY COMMENT'ИДЕНТИФИКАТОР',
+    version INTEGER COMMENT'ВЕРСИЯ',
+    weather_id INTEGER COMMENT'ИДЕНТИФИКАТОР ПОГОДЫ',
+    pubDate INTEGER COMMENT'ДАТА ПУБЛИКАЦИИ'
 );
+COMMENT ON TABLE CURRENT_OBSERVATION IS 'ТЕКУЩАЯ ПОГОДА';
 
 CREATE TABLE IF NOT EXISTS WIND(
-id SERIAL PRIMARY KEY,
-version INTEGER,
-obs_id INTEGER,
-chill INTEGER,
-direction INTEGER,
-speed FLOAT
+    id SERIAL PRIMARY KEY COMMENT'ИДЕНТИФИКАТОР',
+    version INTEGER COMMENT'ВЕРСИЯ',
+    obs_id INTEGER COMMENT'ИДЕНТИФИКАТОР ТЕКУЩЕЙ ПОГОДЫ',
+    chill INTEGER COMMENT'ТЕМПЕРАТУРА',
+    direction INTEGER COMMENT'НАПРАВЛЕНИЕ',
+    speed FLOAT COMMENT'СКОРОСТЬ'
 );
+COMMENT ON TABLE WIND IS 'ВЕТЕР';
 
 CREATE TABLE IF NOT EXISTS atmosphere(
-id SERIAL PRIMARY KEY,
-version INTEGER,
-obs_id INTEGER,
-humidity INTEGER,
-visibility INTEGER,
-pressure FLOAT
+    id SERIAL PRIMARY KEY COMMENT'ИДЕНТИФИКАТОР',
+    version INTEGER COMMENT'ВЕРСИЯ',
+    obs_id INTEGER COMMENT'ИДЕНТИФИКАТОР ТЕКУЩЕЙ ПОГОДЫ',
+    humidity INTEGER COMMENT'ВЛАЖНОСТЬ',
+    visibility INTEGER COMMENT'ВИДИМОСТЬ',
+    pressure FLOAT COMMENT'ДАВЛЕНИЕ'
 );
+COMMENT ON TABLE ATMOSPHERE IS 'АТМОСФЕРА';
 
 CREATE TABLE IF NOT EXISTS astronomy(
-id SERIAL PRIMARY KEY,
-version INTEGER,
-obs_id INTEGER,
-sunrise VARCHAR(10),
-sunset VARCHAR(10)
+    id SERIAL PRIMARY KEY COMMENT'ИДЕНТИФИКАТОР',
+    version INTEGER COMMENT'ВЕРСИЯ',
+    obs_id INTEGER COMMENT'ИДЕНТИФИКАТОР ТЕКУЩЕЙ ПОГОДЫ',
+    sunrise VARCHAR(10) COMMENT'РАССВЕТ',
+    sunset VARCHAR(10) COMMENT'ЗАКАТ'
 );
+COMMENT ON TABLE ASTRONOMY IS 'АСТРОНОМИЯ';
 
 CREATE TABLE IF NOT EXISTS CONDITION(
-id SERIAL PRIMARY KEY,
-version INTEGER,
-obs_id INTEGER,
-text VARCHAR(50),
-code INTEGER,
-temperature INTEGER
+    id SERIAL PRIMARY KEY COMMENT'ИДЕНТИФИКАТОР',
+    version INTEGER COMMENT'ВЕРСИЯ',
+    obs_id INTEGER COMMENT'ИДЕНТИФИКАТОР ТЕКУЩЕЙ ПОГОДЫ',
+    text VARCHAR(50) COMMENT'ОПИСАНИЕ',
+    temperature INTEGER COMMENT'ТЕМПЕРАТУРА'
 );
+COMMENT ON TABLE CONDITION IS 'ОПИСАНИЕ';
 
 CREATE TABLE IF NOT EXISTS FORECAST(
-id SERIAL PRIMARY KEY,
-version INTEGER,
-weather_id INTEGER,
-day VARCHAR(3),
-date BIGINT,
-low INTEGER,
-high INTEGER,
-text VARCHAR(50),
-code INTEGER
+    id SERIAL PRIMARY KEY COMMENT'ИДЕНТИФИКАТОР',
+    version INTEGER COMMENT'ВЕРСИЯ',
+    weather_id INTEGER COMMENT'ИДЕНТИФИКАТОР ПОГОДЫ',
+    day VARCHAR(3) COMMENT'ДЕНЬ НЕДЕЛИ',
+    date BIGINT COMMENT'ДАТА',
+    low INTEGER COMMENT'МИНИМАЛЬНАЯ ТЕМПЕРАТУРА',
+    high INTEGER COMMENT'МКСИМАЛЬНАЯ ТЕМПЕРАТУРА',
+    text VARCHAR(50) COMMENT'ОПИСАНИЕ'
 );
+COMMENT ON TABLE FORECAST IS 'ПРОГНОЗ';
 
 ALTER TABLE LOCATION ADD FOREIGN KEY (WEATHER_ID) REFERENCES WEATHER(ID);
 ALTER TABLE CURRENT_OBSERVATION ADD FOREIGN KEY (WEATHER_ID) REFERENCES WEATHER(ID);

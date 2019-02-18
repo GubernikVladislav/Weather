@@ -36,19 +36,7 @@ public class WeatherDaoImpl implements WeatherDao {
             return;
         }
 
-        weather.getLocation().setWeather(weather);
-
-        weather.setCityName(weather.getLocation().getCity());
-
-        weather.getCurrentObservation().setWeather(weather);
-        weather.getCurrentObservation().getAstronomy().setObservation(weather.getCurrentObservation());
-        weather.getCurrentObservation().getAtmosphere().setObservation(weather.getCurrentObservation());
-        weather.getCurrentObservation().getWind().setObservation(weather.getCurrentObservation());
-        weather.getCurrentObservation().getCondition().setObservation(weather.getCurrentObservation());
-
-        for(Forecast forecast : weather.getForecasts()){
-            forecast.setWeather(weather);
-        }
+        setDependencies(weather);
 
         entityManager.persist(weather);
     }
@@ -71,7 +59,7 @@ public class WeatherDaoImpl implements WeatherDao {
     @Override
     public Weather get(String location) {
 
-        if(location.isEmpty()){
+        if(location == null || location.isEmpty()){
             return new Weather();
         }
 
@@ -114,5 +102,26 @@ public class WeatherDaoImpl implements WeatherDao {
                 || weather.getCurrentObservation().getAstronomy() == null
                 || weather.getCurrentObservation().getWind() == null
                 || weather.getForecasts() == null;
+    }
+
+    /**
+     * Установка зависимостей в зависимые объекты
+     * @param weather - объект данных о погоде
+     */
+    private void setDependencies(Weather weather) {
+
+        weather.getLocation().setWeather(weather);
+
+        weather.setCityName(weather.getLocation().getCity());
+
+        weather.getCurrentObservation().setWeather(weather);
+        weather.getCurrentObservation().getAstronomy().setObservation(weather.getCurrentObservation());
+        weather.getCurrentObservation().getAtmosphere().setObservation(weather.getCurrentObservation());
+        weather.getCurrentObservation().getWind().setObservation(weather.getCurrentObservation());
+        weather.getCurrentObservation().getCondition().setObservation(weather.getCurrentObservation());
+
+        for(Forecast forecast : weather.getForecasts()){
+            forecast.setWeather(weather);
+        }
     }
 }

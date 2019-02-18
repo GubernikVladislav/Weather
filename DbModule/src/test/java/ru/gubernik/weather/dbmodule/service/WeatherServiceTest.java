@@ -23,8 +23,13 @@ import ru.gubernik.weather.dbserviceapi.model.WindDto;
 import java.util.Iterator;
 import java.util.List;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyZeroInteractions;
+import static org.mockito.Mockito.when;
 
 /**
  * Тестирование сервиса
@@ -104,4 +109,40 @@ public class WeatherServiceTest {
         verify(weatherDao, times(1)).save(weather);
     }
 
+    /**
+     * Проверка сохранения при null параметре
+     */
+    @Test
+    public void nullSaveTest(){
+        WeatherDto weatherDto = null;
+
+        weatherService.save(weatherDto);
+
+        verifyZeroInteractions(weatherDao);
+    }
+
+    /**
+     * Проверка обновления при null параметре
+     */
+    @Test
+    public void nullUpdateTest(){
+        WeatherDto weatherDto = null;
+
+        weatherService.update(weatherDto);
+
+        verifyZeroInteractions(weatherDao);
+    }
+
+    /**
+     * Проверка получения списка доступных городов
+     */
+    @Test
+    public void listTest(){
+        List<Location> list = mock(List.class);
+
+        when(weatherDao.getLocationList()).thenReturn(list);
+
+        assertEquals(list, weatherService.locationList());
+        verify(weatherDao, times(1)).getLocationList();
+    }
 }

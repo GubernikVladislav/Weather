@@ -13,7 +13,7 @@ import javax.jms.MessageListener;
 /**
  * Слушатель Jms очереди jms/queue/weather
  */
-@MessageDriven(name = "GbJmsReceiver", activationConfig = {
+@MessageDriven(name = "DbJmsReceiver", activationConfig = {
         @ActivationConfigProperty(propertyName = "destinationLookup",
                 propertyValue = "java:jboss/exported/jms/queue/weather"),
         @ActivationConfigProperty(propertyName = "destinationType",
@@ -33,10 +33,17 @@ public class JmsReceiver implements MessageListener {
 
     @Override
     public void onMessage(Message message) {
+
+        if(message == null){
+            return;
+        }
+
         try {
             if(message.isBodyAssignableTo(WeatherDto.class)) {
                 WeatherDto weather = message.getBody(WeatherDto.class);
                 weatherService.save(weather);
+            }else {
+                throw new RuntimeException("Incorrect message body type");
             }
         } catch (JMSException e) {
             throw new RuntimeException("Jms message error", e);

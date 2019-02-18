@@ -6,7 +6,6 @@ import ru.gubernik.weather.dbmodule.model.Weather;
 
 import javax.annotation.Resource;
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -19,10 +18,8 @@ import java.util.List;
 @Service
 public class SpringWeatherDaoImpl implements SpringWeatherDao {
 
+    @Resource(mappedName = "java:/entityManager")
     private EntityManager entityManager;
-
-    @Resource(mappedName = "java:/entityManagerFactory")
-    private EntityManagerFactory factory;
 
     /**
      * {@inheritDoc}
@@ -30,11 +27,9 @@ public class SpringWeatherDaoImpl implements SpringWeatherDao {
     @Override
     public Weather get(String location) {
 
-        if (location.isEmpty()){
+        if (location == null || location.isEmpty()){
             return new Weather();
         }
-
-        entityManager = factory.createEntityManager();
 
         CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
         CriteriaQuery<Weather> criteriaQuery = criteriaBuilder.createQuery(Weather.class);
@@ -52,7 +47,6 @@ public class SpringWeatherDaoImpl implements SpringWeatherDao {
      */
     @Override
     public List<Location> locations() {
-        entityManager = factory.createEntityManager();
 
         CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
         CriteriaQuery<Location> criteriaQuery = criteriaBuilder.createQuery(Location.class);

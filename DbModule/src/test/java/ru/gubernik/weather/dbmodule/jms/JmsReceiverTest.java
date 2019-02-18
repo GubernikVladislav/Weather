@@ -12,7 +12,12 @@ import ru.gubernik.weather.dbserviceapi.model.WeatherDto;
 import javax.jms.JMSException;
 import javax.jms.Message;
 
-import static org.mockito.Mockito.*;
+import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyZeroInteractions;
+import static org.mockito.Mockito.when;
 
 /**
  * Тестирование слушателя Jms очереди
@@ -64,6 +69,21 @@ public class JmsReceiverTest {
         WeatherDto weather = mock(WeatherDto.class);
 
         when(message.isBodyAssignableTo(WeatherDto.class)).thenReturn(false);
+
+        try {
+            jmsReceiver.onMessage(message);
+        }catch (RuntimeException e){
+            assertEquals(e.getMessage(), "Incorrect message body type");
+        }
+        verifyZeroInteractions(weatherService);
+    }
+
+    /**
+     * Тестрование при null параметре
+     */
+    @Test
+    public void nullMessageTest(){
+        Message message = null;
 
         jmsReceiver.onMessage(message);
 

@@ -12,7 +12,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Version;
-import java.io.Serializable;
 import java.util.Objects;
 
 /**
@@ -20,7 +19,7 @@ import java.util.Objects;
  */
 @Entity
 @Table(name = "forecast")
-public class Forecast implements Serializable {
+public class Forecast {
 
     @JsonIgnore
     @Id
@@ -60,12 +59,6 @@ public class Forecast implements Serializable {
      */
     @Column(name = "text", length = 50)
     private String text;
-
-    /**
-     * Код
-     */
-    @Column(name = "code")
-    private Integer code;
 
     @JsonIgnore
     @ManyToOne(cascade = CascadeType.ALL)
@@ -135,23 +128,17 @@ public class Forecast implements Serializable {
         this.text = text;
     }
 
-    public Integer getCode() {
-        return code;
-    }
-
-    public void setCode(Integer code) {
-        this.code = code;
-    }
-
     @Override
     public String toString() {
-        return "ForecastDto{" +
-                "day='" + day + '\'' +
+        return "Forecast{" +
+                "id=" + id +
+                ", version=" + version +
+                ", day='" + day + '\'' +
                 ", date=" + date +
                 ", low=" + low +
                 ", high=" + high +
                 ", text='" + text + '\'' +
-                ", code=" + code +
+                ", weather=" + weather +
                 '}';
     }
 
@@ -167,12 +154,11 @@ public class Forecast implements Serializable {
                 Objects.equals(low, forecast.low) &&
                 Objects.equals(high, forecast.high) &&
                 Objects.equals(text, forecast.text) &&
-                Objects.equals(code, forecast.code) &&
                 Objects.equals(weather, forecast.weather);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, version, day, date, low, high, text, code, weather);
+        return Objects.hash(id, version, day, date, low, high, text, weather);
     }
 }
