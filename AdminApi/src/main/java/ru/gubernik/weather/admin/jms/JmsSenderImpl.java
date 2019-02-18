@@ -19,19 +19,11 @@ public class JmsSenderImpl implements JmsSender {
     @Resource(mappedName = "java:jboss/exported/jms/queue/city")
     private Queue queue;
 
-    private final JMSContext context;
-
     @Inject
-    public JmsSenderImpl(JMSContext context) {
-        this.context = context;
-    }
+    private JMSContext context;
 
-    /**
-     * Конструктор для тестов
-     */
-    protected JmsSenderImpl(JMSContext context, Queue queue){
-        this.context = context;
-        this.queue = queue;
+    public JmsSenderImpl(){
+
     }
 
     /**
@@ -39,7 +31,8 @@ public class JmsSenderImpl implements JmsSender {
      * @param message - текст сообщения
      */
     public void send(String message){
-        if (message.isEmpty()){
+
+        if (message == null || message.isEmpty()){
             return;
         }
         context.createProducer().send(queue, message);

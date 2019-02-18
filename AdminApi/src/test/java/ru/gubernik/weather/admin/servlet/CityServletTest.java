@@ -14,7 +14,12 @@ import javax.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.atLeast;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verifyZeroInteractions;
 
 @RunWith(MockitoJUnitRunner.class)
 public class CityServletTest {
@@ -78,6 +83,11 @@ public class CityServletTest {
         verify(dispatcher, atLeast(1)).forward(request, response);
     }
 
+    /**
+     * Проверка при наличии чисел в навании города
+     * @throws ServletException исключение метода doPost
+     * @throws IOException исключение метода doPost
+     */
     @Test
     public void incorrectCityNameTest() throws ServletException, IOException {
 
