@@ -6,6 +6,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.gubernik.weather.dbserviceapi.model.WeatherDto;
 import ru.gubernik.weather.weatherservice.service.WeatherService;
+import ru.gubernik.weather.weatherservice.view.LocationView;
+
+import java.util.List;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
@@ -30,6 +33,16 @@ public class WeatherControllerImpl implements WeatherController {
     @RequestMapping(value = "/{location}", method = {GET})
     public WeatherDto getWeather(@PathVariable("location") String location) throws Exception {
 
-        return weatherService.getWeather(location);
+        LocationView view = new LocationView(location);
+        if(list().contains(view) && location.matches("^[a-zA-Z]+[\\-]?[a-zA-Z]+[\\-]?[a-zA-Z]+$")){
+            return weatherService.getWeather(location);
+        }else {
+            return new WeatherDto();
+        }
+    }
+
+    @Override
+    public List<LocationView> list() {
+        return weatherService.list();
     }
 }

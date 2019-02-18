@@ -1,9 +1,12 @@
 package ru.gubernik.weather.dbserviceapi.service;
 
+import ru.gubernik.weather.dbserviceapi.model.LocationDto;
 import ru.gubernik.weather.dbserviceapi.model.WeatherDto;
 
+import java.util.List;
+
 /**
- * Интерфейс для Remote Proxy
+ * нтерфейс для Remote Proxy
  */
 public interface RemoteProxy {
 
@@ -14,4 +17,9 @@ public interface RemoteProxy {
      */
     WeatherDto getWeather(String location);
 
+    /**
+     * Получение списка доступных городов
+     * @return
+     */
+    List<LocationDto> list();
 }

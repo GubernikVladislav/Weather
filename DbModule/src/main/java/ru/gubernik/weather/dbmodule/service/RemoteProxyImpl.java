@@ -4,9 +4,13 @@ import ma.glasnost.orika.MapperFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.gubernik.weather.dbmodule.dao.spring.SpringWeatherDao;
+import ru.gubernik.weather.dbmodule.model.Location;
 import ru.gubernik.weather.dbmodule.model.Weather;
+import ru.gubernik.weather.dbserviceapi.model.LocationDto;
 import ru.gubernik.weather.dbserviceapi.model.WeatherDto;
 import ru.gubernik.weather.dbserviceapi.service.RemoteProxy;
+
+import java.util.List;
 
 /**
  * Реализация интерфейса RemoteProxy
@@ -38,5 +42,13 @@ public class RemoteProxyImpl implements RemoteProxy {
         } catch (Exception e) {
             throw new RuntimeException("Mapper Error");
         }
+    }
+
+    @Override
+    public List<LocationDto> list() {
+
+        List<Location> locations = weatherDao.locations();
+        List<LocationDto> dtoList = mapperFactory.getMapperFacade().mapAsList(locations, LocationDto.class);
+        return dtoList;
     }
 }

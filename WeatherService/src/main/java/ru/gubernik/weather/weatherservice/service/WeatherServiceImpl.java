@@ -3,8 +3,12 @@ package ru.gubernik.weather.weatherservice.service;
 import ma.glasnost.orika.MapperFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import ru.gubernik.weather.dbserviceapi.model.LocationDto;
 import ru.gubernik.weather.dbserviceapi.model.WeatherDto;
 import ru.gubernik.weather.dbserviceapi.service.RemoteProxy;
+import ru.gubernik.weather.weatherservice.view.LocationView;
+
+import java.util.List;
 
 /**
  * {@inheritDoc}
@@ -27,5 +31,13 @@ public class WeatherServiceImpl implements WeatherService{
         location = location.substring(0,1).toUpperCase() + location.substring(1).toLowerCase();
 
         return remoteProxy.getWeather(location);
+    }
+
+    @Override
+    public List<LocationView> list() {
+
+        List<LocationDto> dtoList = remoteProxy.list();
+        List<LocationView> views = mapperFactory.getMapperFacade().mapAsList(dtoList, LocationView.class);
+        return views;
     }
 }
