@@ -35,7 +35,6 @@ public class WeatherServiceImpl implements WeatherService{
         if(location.isEmpty()){
             return new WeatherDto();
         }
-
         return remoteProxy.getWeather(editString(location));
     }
 

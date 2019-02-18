@@ -36,10 +36,12 @@ public class WeatherControllerImpl implements WeatherController {
         String editLocation = weatherService.editString(location);
         LocationView view = new LocationView(editLocation);
 
-        if(list().contains(view) && location.matches("^[a-zA-Z]+[\\-]?[a-zA-Z]+[\\-]?[a-zA-Z]+$")){
-            return weatherService.getWeather(location);
+        if(!location.matches("^[a-zA-Z]+[\\-]?[a-zA-Z]+[\\-]?[a-zA-Z]+$")){
+            throw new RuntimeException("incorrect city name");
+        }else if(!list().contains(view)){
+            throw new RuntimeException("no information");
         }else {
-            return new WeatherDto();
+            return weatherService.getWeather(location);
         }
     }
 
