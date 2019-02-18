@@ -6,9 +6,9 @@ import ru.gubernik.weather.dbserviceapi.model.WeatherDto;
 import java.util.List;
 
 /**
- * Интерфейс для передачи через Hessian
+ * Интерфейс получения данных о погоде
  */
-public interface RemoteProxy {
+public interface GetWeatherService {
 
     /**
      * Получение данных о погоде по названию города
