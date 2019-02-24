@@ -22,7 +22,6 @@ import java.util.Objects;
 @Table(name = "forecast")
 public class Forecast implements Serializable {
 
-    @JsonIgnore
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;

@@ -1,5 +1,7 @@
 package ru.gubernik.weather.dbmodule.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.gubernik.weather.dbmodule.dao.WeatherDao;
 import ru.gubernik.weather.dbmodule.mapper.MapperFacade;
@@ -7,20 +9,18 @@ import ru.gubernik.weather.dbmodule.model.Location;
 import ru.gubernik.weather.dbmodule.model.Weather;
 import ru.gubernik.weather.dbserviceapi.model.WeatherDto;
 
-import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Inject;
 import java.util.List;
 
 /**
  * {@inheritDoc}
  */
-@ApplicationScoped
+@Service
 public class WeatherServiceImpl implements WeatherService {
 
     private final WeatherDao weatherDao;
     private final MapperFacade mapperFacade;
 
-    @Inject
+    @Autowired
     public WeatherServiceImpl(WeatherDao weatherDao, MapperFacade mapperFacade){
         this.weatherDao = weatherDao;
         this.mapperFacade = mapperFacade;

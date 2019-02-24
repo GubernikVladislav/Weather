@@ -3,7 +3,7 @@ package ru.gubernik.weather.dbmodule.service;
 import ma.glasnost.orika.MapperFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ru.gubernik.weather.dbmodule.dao.spring.SpringWeatherDao;
+import ru.gubernik.weather.dbmodule.dao.WeatherDao;
 import ru.gubernik.weather.dbmodule.model.Location;
 import ru.gubernik.weather.dbmodule.model.Weather;
 import ru.gubernik.weather.dbserviceapi.model.LocationDto;
@@ -18,11 +18,11 @@ import java.util.List;
 @Service
 public class GetWeatherServiceImpl implements GetWeatherService {
 
-    private final SpringWeatherDao weatherDao;
+    private final WeatherDao weatherDao;
     private final MapperFactory mapperFactory;
 
     @Autowired
-    public GetWeatherServiceImpl(SpringWeatherDao weatherDao, MapperFactory mapperFactory){
+    public GetWeatherServiceImpl(WeatherDao weatherDao, MapperFactory mapperFactory){
         this.weatherDao = weatherDao;
         this.mapperFactory = mapperFactory;
     }
@@ -42,7 +42,7 @@ public class GetWeatherServiceImpl implements GetWeatherService {
         try {
             return mapperFactory.getMapperFacade().map(weather, WeatherDto.class);
         } catch (Exception e) {
-            throw new RuntimeException("Mapper Error", e);
+            throw new RuntimeException("Mapper Error");
         }
     }
 
@@ -52,7 +52,7 @@ public class GetWeatherServiceImpl implements GetWeatherService {
     @Override
     public List<LocationDto> list() {
 
-        List<Location> locations = weatherDao.locations();
+        List<Location> locations = weatherDao.getLocationList();
         return mapperFactory.getMapperFacade().mapAsList(locations, LocationDto.class);
     }
 }

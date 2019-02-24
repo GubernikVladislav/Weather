@@ -1,12 +1,12 @@
 package ru.gubernik.weather.dbmodule.dao;
 
+import org.springframework.stereotype.Service;
 import ru.gubernik.weather.dbmodule.model.Forecast;
 import ru.gubernik.weather.dbmodule.model.Location;
 import ru.gubernik.weather.dbmodule.model.Weather;
 
-import javax.enterprise.context.ApplicationScoped;
+import javax.annotation.Resource;
 import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -16,10 +16,10 @@ import java.util.List;
 /**
  * {@inheritDoc}
  */
-@ApplicationScoped
+@Service
 public class WeatherDaoImpl implements WeatherDao {
 
-    @PersistenceContext
+    @Resource(mappedName = "java:/entityManager")
     private EntityManager entityManager;
 
     public WeatherDaoImpl(){

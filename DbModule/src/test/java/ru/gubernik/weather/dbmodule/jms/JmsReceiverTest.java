@@ -1,6 +1,7 @@
 package ru.gubernik.weather.dbmodule.jms;
 
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -22,6 +23,7 @@ import static org.mockito.Mockito.when;
 /**
  * Тестирование слушателя Jms очереди
  */
+@Ignore
 @RunWith(MockitoJUnitRunner.class)
 public class JmsReceiverTest {
 
@@ -66,7 +68,6 @@ public class JmsReceiverTest {
     @Test
     public void noReceiveTest() throws JMSException {
         Message message = mock(Message.class);
-        WeatherDto weather = mock(WeatherDto.class);
 
         when(message.isBodyAssignableTo(WeatherDto.class)).thenReturn(false);
 

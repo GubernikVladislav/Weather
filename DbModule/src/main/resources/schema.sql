@@ -61,7 +61,6 @@ CREATE TABLE IF NOT EXISTS CONDITION(
     version INTEGER COMMENT'ВЕРСИЯ',
     obs_id INTEGER COMMENT'ИДЕНТИФИКАТОР ТЕКУЩЕЙ ПОГОДЫ',
     text VARCHAR(50) COMMENT'ОПИСАНИЕ',
-    code INTEGER,
     temperature INTEGER COMMENT'ТЕМПЕРАТУРА'
 );
 COMMENT ON TABLE CONDITION IS 'ОПИСАНИЕ';
@@ -74,8 +73,7 @@ CREATE TABLE IF NOT EXISTS FORECAST(
     date BIGINT COMMENT'ДАТА',
     low INTEGER COMMENT'МИНИМАЛЬНАЯ ТЕМПЕРАТУРА',
     high INTEGER COMMENT'МКСИМАЛЬНАЯ ТЕМПЕРАТУРА',
-    text VARCHAR(50) COMMENT'ОПИСАНИЕ',
-    code INTEGER
+    text VARCHAR(50) COMMENT'ОПИСАНИЕ'
 );
 COMMENT ON TABLE FORECAST IS 'ПРОГНОЗ';
 

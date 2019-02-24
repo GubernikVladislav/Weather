@@ -1,11 +1,10 @@
 package ru.gubernik.weather.dbmodule.jms;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import ru.gubernik.weather.dbmodule.service.WeatherService;
 import ru.gubernik.weather.dbserviceapi.model.WeatherDto;
 
-import javax.ejb.ActivationConfigProperty;
-import javax.ejb.MessageDriven;
-import javax.inject.Inject;
 import javax.jms.JMSException;
 import javax.jms.Message;
 import javax.jms.MessageListener;
@@ -13,18 +12,10 @@ import javax.jms.MessageListener;
 /**
  * Слушатель Jms очереди jms/queue/weather
  */
-@MessageDriven(name = "DbJmsReceiver", activationConfig = {
-        @ActivationConfigProperty(propertyName = "destinationLookup",
-                propertyValue = "java:jboss/exported/jms/queue/weather"),
-        @ActivationConfigProperty(propertyName = "destinationType",
-                propertyValue = "javax.jms.Queue"),
-        @ActivationConfigProperty(propertyName = "acknowledgeMode",
-                propertyValue = "Auto-acknowledge")
-
-})
+@Component
 public class JmsReceiver implements MessageListener {
 
-    @Inject
+    @Autowired
     private WeatherService weatherService;
 
     public JmsReceiver(){

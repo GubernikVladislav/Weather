@@ -8,7 +8,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Spy;
 import org.mockito.runners.MockitoJUnitRunner;
-import ru.gubernik.weather.dbmodule.dao.spring.SpringWeatherDaoImpl;
+import ru.gubernik.weather.dbmodule.dao.WeatherDao;
 import ru.gubernik.weather.dbmodule.model.Location;
 import ru.gubernik.weather.dbmodule.model.Weather;
 import ru.gubernik.weather.dbserviceapi.model.LocationDto;
@@ -30,7 +30,7 @@ import static org.mockito.Mockito.when;
 public class GetWeatherServiceTest {
 
     @Mock
-    private SpringWeatherDaoImpl springWeatherDao;
+    private WeatherDao weatherDao;
 
     @Mock
     private MapperFactory mapperFactory;
@@ -44,7 +44,7 @@ public class GetWeatherServiceTest {
      */
     @Test
     public void checkNull(){
-        assertNotNull(springWeatherDao);
+        assertNotNull(weatherDao);
         assertNotNull(mapperFactory);
         assertNotNull(remoteProxy);
     }
@@ -59,17 +59,17 @@ public class GetWeatherServiceTest {
         WeatherDto weatherDto = mock(WeatherDto.class);
         MapperFacade mapperFacade = mock(MapperFacade.class);
 
-        when(springWeatherDao.get(location)).thenReturn(weather);
+        when(weatherDao.get(location)).thenReturn(weather);
         when(mapperFactory.getMapperFacade()).thenReturn(mapperFacade);
         when(mapperFacade.map(weather, WeatherDto.class)).thenReturn(weatherDto);
 
         WeatherDto weatherDto1 = remoteProxy.getWeather(location);
 
-        verify(springWeatherDao).get(location);
+        verify(weatherDao).get(location);
         verify(mapperFactory).getMapperFacade();
         verify(mapperFacade).map(weather, WeatherDto.class);
 
-        assertEquals(weatherDto, weatherDto);
+        assertEquals(weatherDto, weatherDto1);
     }
 
     /**
@@ -105,13 +105,13 @@ public class GetWeatherServiceTest {
         List<LocationDto> dtoList = mock(List.class);
         MapperFacade mapperFacade = mock(MapperFacade.class);
 
-        when(springWeatherDao.locations()).thenReturn(list);
+        when(weatherDao.getLocationList()).thenReturn(list);
         when(mapperFactory.getMapperFacade()).thenReturn(mapperFacade);
         when(mapperFacade.mapAsList(list, LocationDto.class)).thenReturn(dtoList);
 
         List<LocationDto> targetList = remoteProxy.list();
 
-        verify(springWeatherDao, times(1)).locations();
+        verify(weatherDao, times(1)).getLocationList();
         verify(mapperFactory, times(1)).getMapperFacade();
         verify(mapperFacade, times(1)).mapAsList(list, LocationDto.class);
 
