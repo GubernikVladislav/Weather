@@ -1,6 +1,5 @@
 package ru.gubernik.weather.weatherservice.service;
 
-import ma.glasnost.orika.MapperFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.gubernik.weather.dbserviceapi.model.LocationDto;
@@ -18,12 +17,10 @@ import java.util.List;
 public class WeatherServiceImpl implements WeatherService{
 
     private final GetWeatherService getWeatherService;
-    private final MapperFactory mapperFactory;
 
     @Autowired
-    public WeatherServiceImpl(GetWeatherService getWeatherService, MapperFactory mapperFactory) {
+    public WeatherServiceImpl(GetWeatherService getWeatherService) {
         this.getWeatherService = getWeatherService;
-        this.mapperFactory = mapperFactory;
     }
 
     /**

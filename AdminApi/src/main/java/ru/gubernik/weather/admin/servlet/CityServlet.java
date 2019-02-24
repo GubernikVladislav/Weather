@@ -8,6 +8,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Сервлет обработки страницы index.jps
@@ -15,6 +17,7 @@ import java.io.IOException;
 public class CityServlet extends HttpServlet {
 
     private final JmsSender jmsSender;
+    private Pattern pattern = Pattern.compile("^[a-zA-Z]+[\\-]?[a-zA-Z]+[\\-]?[a-zA-Z]+$");
 
     @Inject
     public CityServlet(JmsSender jmsSender) {
@@ -32,7 +35,11 @@ public class CityServlet extends HttpServlet {
         if(cityName == null || cityName.isEmpty()){
             setForward(req, resp, "City name must be not null");
             return;
-        }else if(!cityName.matches("^[a-zA-Z]+[\\-]?[a-zA-Z]+[\\-]?[a-zA-Z]+$")){
+        }
+
+        Matcher matcher = pattern.matcher(cityName);
+
+        if(!matcher.matches()){
             setForward(req, resp, "City name must contains only letters or -");
             return;
         }
